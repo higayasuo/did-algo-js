@@ -1,0 +1,37 @@
+{
+  "name": "did-jwt-toolkit",
+  "version": "0.1.0",
+  "description": "The toolkit for did-jwt and did-jwt-vc",
+  "type": "module",
+  "source": "src/index.ts",
+  "main": "./dist/index.js",
+  "module": "./dist/index.module.js",
+  "types": "./dist/index.d.ts",
+  "files": [
+    "lib",
+    "dist",
+    "src",
+    "LICENSE"
+  ],
+  "exports": {
+    ".": {
+      "types": "./dist/index.d.ts",
+      "require": "./dist/index.js",
+      "import": "./dist/index.module.js"
+    }
+  },
+  "sideEffects": false,
+  "repository": {
+    "type": "git",
+    "url": "git@github.com:higayasuo/did-jwt-toolkit.git"
+  },
+  "author": "Yasuo Higa",
+  "contributors": [],
+  "license": "MIT",
+  "scripts": {
+    "build": "microbundle"
+  },
+  "devDependencies": {
+    "microbundle": "^0.15.1"
+  }
+}
