@@ -4,11 +4,10 @@
   "description": "The toolkit for did-jwt and did-jwt-vc",
   "type": "module",
   "source": "src/index.ts",
-  "main": "./dist/index.js",
+  "main": "./dist/index.cjs",
   "module": "./dist/index.module.js",
   "types": "./dist/index.d.ts",
   "files": [
-    "lib",
     "dist",
     "src",
     "LICENSE"
@@ -16,7 +15,7 @@
   "exports": {
     ".": {
       "types": "./dist/index.d.ts",
-      "require": "./dist/index.js",
+      "require": "./dist/index.cjs",
       "import": "./dist/index.module.js"
     }
   },
