@@ -10,7 +10,7 @@
     "strict": true,
     "noImplicitThis": false,
     "moduleResolution": "node",
-    "types": [],
+    "types": ["mocha"],
     "allowSyntheticDefaultImports": true,
     "resolveJsonModule": true,
     "esModuleInterop": true

@@ -28,9 +28,16 @@
   "contributors": [],
   "license": "MIT",
   "scripts": {
-    "build": "microbundle"
+    "build": "microbundle",
+    "test": "TS_NODE_COMPILER_OPTIONS='{\"module\": \"commonjs\"}' ts-mocha -r tsconfig-paths/register --transpile-only --timeout 100000",
+    "tests": "yarn test --paths **/*.spec.ts"
   },
   "devDependencies": {
-    "microbundle": "^0.15.1"
+    "@types/chai": "^4.3.4",
+    "@types/mocha": "^10.0.1",
+    "chai": "^4.3.7",
+    "microbundle": "^0.15.1",
+    "mocha": "^10.2.0",
+    "ts-mocha": "^10.0.0"
   }
 }
