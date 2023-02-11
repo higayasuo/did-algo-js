@@ -37,17 +37,17 @@ export class DidKeyDriver {
   didFromPublicKey = (publicKey: Uint8Array): string => {
     return `did:key:${this.#alg.multibaseFromPublicKey(publicKey)}`;
   };
-}
 
-/**
- * Converts the secret key to the signer
- *
- * @param secretKey - the secret key
- * @returns the signer
- */
-export const signerFromSecretKey = (secretKey: Uint8Array): Signer => {
-  return EdDSASigner(secretKey);
-};
+  /**
+   * Converts the secret key to the signer
+   *
+   * @param secretKey - the secret key
+   * @returns the signer
+   */
+  signerFromSecretKey = (secretKey: Uint8Array): didJwt.Signer => {
+    return this.#alg.signerFromSecretKey(secretKey);
+  };
+}
 
 const errorDIDResolutionResult = (
   error: string,

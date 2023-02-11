@@ -1,6 +1,9 @@
 import { describe, it, expect } from 'vitest';
+
+import * as elliptic from 'elliptic';
 import * as ed25519 from '@stablelib/ed25519';
 import * as u8a from 'uint8arrays';
+import * as sha256 from '@stablelib/sha256';
 
 import * as multibaseUtils from '../utils/multibaseUtils';
 import * as ed25519Alg from '../alg/ed25519Alg';
@@ -13,6 +16,9 @@ const secp256k1Driver = new didKeyDriver.DidKeyDriver(
   secp256k1Alg.secp256k1Alg
 );
 const p256Driver = new didKeyDriver.DidKeyDriver(p256Alg.p256Alg);
+
+const secp256k1 = new elliptic.ec('secp256k1');
+const p256 = new elliptic.ec('p256');
 
 describe('didKeyDriver', () => {
   it('generateKeyPair should work', () => {
@@ -52,7 +58,7 @@ describe('didKeyDriver', () => {
     ).to.be.true;
   });
 
-  it('signerFromSecretKey should work', async () => {
+  it('signerFromSecretKey for ed25519 should work', async () => {
     const keyPair = ed25519Driver.generateKeyPair();
     const signer = ed25519Driver.signerFromSecretKey(keyPair.secretKey);
     const data = u8a.fromString('hello', 'utf-8');
@@ -67,5 +73,41 @@ describe('didKeyDriver', () => {
         u8a.fromString(signature, 'base64url')
       )
     ).to.be.true;
+  });
+
+  it('signerFromSecretKey for secp256k1 should work', async () => {
+    const keyPair = secp256k1Driver.generateKeyPair();
+    const signer = secp256k1Driver.signerFromSecretKey(keyPair.secretKey);
+
+    expect(signer).to.toBeDefined();
+
+    const message = u8a.fromString('hello', 'utf-8');
+
+    const sig = (await signer(message)) as string;
+    const rawSig = u8a.fromString(sig, 'base64url');
+    const r = u8a.toString(rawSig.slice(0, 32), 'hex');
+    const s = u8a.toString(rawSig.slice(32, 64), 'hex');
+    const hash = sha256.hash(message);
+
+    expect(secp256k1.keyFromPublic(keyPair.publicKey).verify(hash, { r, s })).to
+      .be.true;
+  });
+
+  it('signerFromSecretKey for p256 should work', async () => {
+    const keyPair = p256Driver.generateKeyPair();
+    const signer = p256Driver.signerFromSecretKey(keyPair.secretKey);
+
+    expect(signer).to.toBeDefined();
+
+    const message = u8a.fromString('hello', 'utf-8');
+
+    const sig = (await signer(message)) as string;
+    const rawSig = u8a.fromString(sig, 'base64url');
+    const r = u8a.toString(rawSig.slice(0, 32), 'hex');
+    const s = u8a.toString(rawSig.slice(32, 64), 'hex');
+    const hash = sha256.hash(message);
+
+    expect(p256.keyFromPublic(keyPair.publicKey).verify(hash, { r, s })).to.be
+      .true;
   });
 });

@@ -1,4 +1,5 @@
 import * as elliptic from 'elliptic';
+import * as didJwt from 'did-jwt';
 
 import * as types from '../types';
 import * as multibaseUtils from '../utils/multibaseUtils';
@@ -13,10 +14,15 @@ export const p256Alg: types.Alg = {
 
     return { publicKey, secretKey };
   },
+
   multibaseFromPublicKey: (publicKey: Uint8Array): string => {
     return multibaseUtils.multibaseFromPublicKey(
       multibaseUtils.MULTICODEC_P256_PUB_HEADER,
       publicKey
     );
+  },
+
+  signerFromSecretKey: (secretKey: Uint8Array): didJwt.Signer => {
+    return didJwt.ES256Signer(secretKey);
   },
 };
