@@ -49,20 +49,6 @@ export class DidKeyDriver {
   };
 }
 
-const errorDIDResolutionResult = (
-  error: string,
-  message: string
-): DIDResolutionResult => {
-  return {
-    didResolutionMetadata: {
-      error,
-      message,
-    },
-    didDocumentMetadata: {},
-    didDocument: null,
-  };
-};
-
 export const resolver: DIDResolver = async (
   did,
   parsed,
