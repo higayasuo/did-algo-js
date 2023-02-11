@@ -29,15 +29,22 @@
   "license": "MIT",
   "scripts": {
     "build": "microbundle",
-    "test": "TS_NODE_COMPILER_OPTIONS='{\"module\": \"commonjs\"}' ts-mocha -r tsconfig-paths/register --transpile-only --timeout 100000",
-    "tests": "yarn test --paths **/*.spec.ts"
+    "test": "vitest"
   },
   "devDependencies": {
-    "@types/chai": "^4.3.4",
-    "@types/mocha": "^10.0.1",
-    "chai": "^4.3.7",
+    "@stablelib/sha256": "^1.0.1",
     "microbundle": "^0.15.1",
-    "mocha": "^10.2.0",
-    "ts-mocha": "^10.0.0"
+    "vitest": "^0.28.4"
+  },
+  "dependencies": {
+    "@stablelib/ed25519": "^1.0.3",
+    "@types/elliptic": "^6.4.14",
+    "@types/varint": "^6.0.1",
+    "did-jwt": "^6.11.0",
+    "did-jwt-vc": "^3.1.0",
+    "did-resolver": "^4.0.1",
+    "elliptic": "^6.5.4",
+    "tweetnacl": "^1.0.3",
+    "uint8arrays": "^4.0.3"
   }
 }

@@ -1,7 +1,7 @@
 {
   "compilerOptions": {
-    "target": "ES2018",
-    "module": "esnext",
+    "target": "ESNext",
+    "module": "ESNext",
     "lib": ["dom", "es6", "es2015.promise"],
     "declaration": true,
     "declarationMap": true,
@@ -10,10 +10,12 @@
     "strict": true,
     "noImplicitThis": false,
     "moduleResolution": "node",
-    "types": ["mocha"],
+    "types": [],
     "allowSyntheticDefaultImports": true,
     "resolveJsonModule": true,
-    "esModuleInterop": true
+    "esModuleInterop": true,
+    "baseUrl": "./src"
   },
+  "include": ["./src"],
   "exclude": ["**/__tests__/*", "node_modules", "dist"]
 }
