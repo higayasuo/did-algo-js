@@ -1,7 +1,7 @@
 import * as didJwt from 'did-jwt';
 import * as didResolver from 'did-resolver';
 
-import * as multibaseUtils from '../utils/multibaseUtils';
+import * as didResolverUtils from '../utils/didResolverUtils';
 import * as errors from '../errors';
 import * as types from '../types';
 
@@ -49,17 +49,18 @@ export class DidKeyDriver {
   };
 }
 
-export const resolver: DIDResolver = async (
+/**
+ * the did resolver function
+ *
+ * @param did - the DID
+ * @param parsed the parsed DID
+ * @param resolver the resolver
+ * @param options the resolver options
+ * @returns the DID resolution result
+ */
+export const resolver: didResolver.DIDResolver = async (
   did,
   parsed,
   resolver,
   options
-): Promise<DIDResolutionResult> => {
-  if (parsed.method !== 'key') {
-    return errorDIDResolutionResult(
-      Errors.methodNotSupported,
-      `The method must be "key", but ${parsed.method}`
-    );
-  }
-  return {} as DIDResolutionResult;
-};
+): Promise<didResolver.DIDResolutionResult> => {};

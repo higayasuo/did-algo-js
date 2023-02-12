@@ -11,3 +11,7 @@ export const invalidPublicKey = 'invalidPublicKey';
 export const internalError = 'internalError';
 
 export const unsupportedPublicKeyType = 'unsupportedPublicKeyType';
+
+export const invalidMultibaseHeader = 'invalidMultibaseHeader';
+
+export const invalidMulticodecHeader = 'invalidMulticodecHeader';

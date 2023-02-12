@@ -27,6 +27,15 @@ describe('secp256k1Alg', () => {
     ).to.be.true;
   });
 
+  it('publicKeyFromMultibase should work', () => {
+    const keyPair = secp256k1Alg.generateKeyPair();
+    const multibase = secp256k1Alg.multibaseFromPublicKey(keyPair.publicKey);
+
+    expect(secp256k1Alg.publicKeyFromMultibase(multibase)).to.toEqual(
+      keyPair.publicKey
+    );
+  });
+
   it('signerFromSecretKey should work', async () => {
     const keyPair = secp256k1Alg.generateKeyPair();
     const signer = secp256k1Alg.signerFromSecretKey(keyPair.secretKey);
@@ -43,5 +52,40 @@ describe('secp256k1Alg', () => {
 
     expect(secp256k1.keyFromPublic(keyPair.publicKey).verify(hash, { r, s })).to
       .be.true;
+  });
+
+  it('publicKeyJwkFromPublicKey should work', async () => {
+    const keyPair = secp256k1Alg.generateKeyPair();
+    const signer = secp256k1Alg.signerFromSecretKey(keyPair.secretKey);
+    const publicKeyJwk = secp256k1Alg.publicKeyJwkFromPublicKey(
+      keyPair.publicKey
+    );
+
+    expect(signer).to.toBeDefined();
+    expect(publicKeyJwk.kty).toEqual('EC');
+    expect(publicKeyJwk.crv).toEqual('secp256k1');
+
+    const message = u8a.fromString('hello', 'utf-8');
+
+    const sig = (await signer(message)) as string;
+    const rawSig = u8a.fromString(sig, 'base64url');
+    const r = u8a.toString(rawSig.slice(0, 32), 'hex');
+    const s = u8a.toString(rawSig.slice(32, 64), 'hex');
+    const hash = sha256.hash(message);
+
+    const key = secp256k1.keyFromPublic({
+      x: u8a.toString(
+        u8a.fromString(publicKeyJwk.x as string, 'base64url'),
+        'hex'
+      ),
+      y: u8a.toString(
+        u8a.fromString(publicKeyJwk.y as string, 'base64url'),
+        'hex'
+      ),
+    });
+    const publicKey = u8a.fromString(key.getPublic('hex'), 'hex');
+
+    expect(secp256k1.keyFromPublic(publicKey).verify(hash, { r, s })).to.be
+      .true;
   });
 });

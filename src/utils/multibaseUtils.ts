@@ -1,6 +1,7 @@
 import * as u8a from 'uint8arrays';
-import * as types from '../types';
 
+import * as types from '../types';
+import * as alg from '../alg';
 import * as errors from '../errors';
 
 // multibase base58-btc header
@@ -21,40 +22,20 @@ export const MULTICODEC_P256_PUB_HEADER = Uint8Array.from([128, 36]);
 /**
  * Converts the public key to the base58btc multibase
  *
- * @param header - multicodec header
+ * @param multicodeHeader - the multicodec header
  * @param publicKey - the public key
  * @returns the base58btc multibase
  */
 export const multibaseFromPublicKey = (
-  header: Uint8Array,
+  multicodeHeader: Uint8Array,
   publicKey: Uint8Array
 ): string => {
-  const mbKey = new Uint8Array(header.length + publicKey.length);
+  const mbKey = new Uint8Array(multicodeHeader.length + publicKey.length);
 
-  mbKey.set(header);
-  mbKey.set(publicKey, header.length);
+  mbKey.set(multicodeHeader);
+  mbKey.set(publicKey, multicodeHeader.length);
 
   return MULTIBASE_BASE58BTC_HEADER + u8a.toString(mbKey, 'base58btc');
-};
-
-/**
- * Returns the multicodec header
- *
- * @param multibase the base58btc multibase
- * @returns the multicodec header
- */
-export const getMulticodecHeader = (multibase: string): Uint8Array => {
-  if (multibase.startsWith(MULTIBASE_BASE58BTC_ED25519_PREFIX)) {
-    return MULTICODEC_ED25519_PUB_HEADER;
-  } else if (multibase.startsWith(MULTIBASE_BASE58BTC_SECP256K1_PREFIX)) {
-    return MULTICODEC_SECP256K1_PUB_HEADER;
-  } else if (multibase.startsWith(MULTIBASE_BASE58BTC_P256_PREFIX)) {
-    return MULTICODEC_P256_PUB_HEADER;
-  }
-
-  throw new Error(
-    `${errors.unsupportedPublicKeyType}:The multibase must start with either ${MULTIBASE_BASE58BTC_ED25519_PREFIX}, ${MULTIBASE_BASE58BTC_SECP256K1_PREFIX}, or ${MULTIBASE_BASE58BTC_P256_PREFIX}, but ${multibase}`
-  );
 };
 
 /**
@@ -63,9 +44,44 @@ export const getMulticodecHeader = (multibase: string): Uint8Array => {
  * @param multibase - the base58btc multibase
  * @returns the public key
  */
-export const publicKeyFromMultibase = (multibase: string): Uint8Array => {
-  const multicodecHeader = getMulticodecHeader(multibase);
+export const publicKeyFromMultibase = (
+  multicodecHeader: Uint8Array,
+  multibase: string
+): Uint8Array => {
+  if (multibase[0] !== MULTIBASE_BASE58BTC_HEADER) {
+    throw new Error(
+      `${errors.invalidMultibaseHeader}: The multibase must start with ${MULTIBASE_BASE58BTC_HEADER}, but ${multibase[0]}`
+    );
+  }
+
   const multicodec = u8a.fromString(multibase.slice(1), 'base58btc');
+  const header = multicodec.slice(0, multicodecHeader.length);
+
+  if (!u8a.equals(multicodecHeader, header)) {
+    throw new Error(
+      `${errors.invalidMulticodecHeader}: The multicodec must start with [${multicodecHeader}], but [${header}]`
+    );
+  }
 
   return multicodec.slice(multicodecHeader.length);
+};
+
+/**
+ * Returns crypto algorithm from the base58btc multibase
+ *
+ * @param multibase the base58btc multibase
+ * @returns crypt algorithm
+ */
+export const algFromMultibase = (multibase: string): types.Alg => {
+  if (multibase.startsWith(MULTIBASE_BASE58BTC_ED25519_PREFIX)) {
+    return alg.ed25519Alg;
+  } else if (multibase.startsWith(MULTIBASE_BASE58BTC_SECP256K1_PREFIX)) {
+    return alg.secp256k1Alg;
+  } else if (multibase.startsWith(MULTIBASE_BASE58BTC_P256_PREFIX)) {
+    return alg.p256Alg;
+  }
+
+  throw new Error(
+    `${errors.unsupportedPublicKeyType}: The multibase must start with either ${MULTIBASE_BASE58BTC_ED25519_PREFIX}, ${MULTIBASE_BASE58BTC_SECP256K1_PREFIX}, or ${MULTIBASE_BASE58BTC_P256_PREFIX}, but ${multibase}`
+  );
 };
