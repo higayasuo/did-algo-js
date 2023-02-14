@@ -1,5 +1,7 @@
 import * as didResolver from 'did-resolver';
 
+import * as errors from '../errors';
+
 /**
  * Returns the did resolution result for error
  *
@@ -19,4 +21,18 @@ export const errorDIDResolutionResult = (
     didDocumentMetadata: {},
     didDocument: null,
   };
+};
+
+export const errorDIDResolutionResultFromErrorMessage = (
+  errorMessage: string
+): didResolver.DIDResolutionResult => {
+  const pieces = errorMessage.split(':');
+
+  if (pieces.length > 1 && (errors as any)[pieces[0]]) {
+    const mes = pieces.slice(1).join(':').trimStart();
+
+    return errorDIDResolutionResult(pieces[0], mes);
+  }
+
+  return errorDIDResolutionResult(errors.internalError, errorMessage);
 };

@@ -2,6 +2,8 @@ import { describe, it, expect } from 'vitest';
 
 import * as elliptic from 'elliptic';
 import * as ed25519 from '@stablelib/ed25519';
+import * as didJwt from 'did-jwt';
+import * as didResolver from 'did-resolver';
 import * as u8a from 'uint8arrays';
 import * as sha256 from '@stablelib/sha256';
 
@@ -93,21 +95,93 @@ describe('didKeyDriver', () => {
       .be.true;
   });
 
-  it('signerFromSecretKey for p256 should work', async () => {
-    const keyPair = p256Driver.generateKeyPair();
-    const signer = p256Driver.signerFromSecretKey(keyPair.secretKey);
+  it('getResolverRegistry for ed25519 should work', async () => {
+    const issKeyPair = ed25519Driver.generateKeyPair();
+    const audKeyPair = ed25519Driver.generateKeyPair();
 
-    expect(signer).to.toBeDefined();
+    const issDid = ed25519Driver.didFromPublicKey(issKeyPair.publicKey);
+    const audDid = ed25519Driver.didFromPublicKey(audKeyPair.publicKey);
 
-    const message = u8a.fromString('hello', 'utf-8');
+    const signer = ed25519Driver.signerFromSecretKey(issKeyPair.secretKey);
+    const resolver = new didResolver.Resolver(
+      ed25519Driver.getResolverRegistry()
+    );
 
-    const sig = (await signer(message)) as string;
-    const rawSig = u8a.fromString(sig, 'base64url');
-    const r = u8a.toString(rawSig.slice(0, 32), 'hex');
-    const s = u8a.toString(rawSig.slice(32, 64), 'hex');
-    const hash = sha256.hash(message);
+    const payload: didJwt.JWTPayload = {
+      aud: audDid,
+      name: 'aaa',
+    };
 
-    expect(p256.keyFromPublic(keyPair.publicKey).verify(hash, { r, s })).to.be
-      .true;
+    const jwt = await didJwt.createJWT(payload, {
+      issuer: issDid,
+      alg: 'EdDSA',
+      signer,
+    });
+    const jwtVerifed = await didJwt.verifyJWT(jwt, {
+      resolver,
+      audience: audDid,
+    });
+
+    expect(jwtVerifed.verified).toBeTruthy();
+  });
+
+  it('getResolverRegistry for secp256k1 should work', async () => {
+    const issKeyPair = secp256k1Driver.generateKeyPair();
+    const audKeyPair = secp256k1Driver.generateKeyPair();
+
+    const issDid = secp256k1Driver.didFromPublicKey(issKeyPair.publicKey);
+    const audDid = secp256k1Driver.didFromPublicKey(audKeyPair.publicKey);
+
+    const signer = secp256k1Driver.signerFromSecretKey(issKeyPair.secretKey);
+    const resolver = new didResolver.Resolver(
+      ed25519Driver.getResolverRegistry()
+    );
+
+    const payload: didJwt.JWTPayload = {
+      aud: audDid,
+      name: 'aaa',
+    };
+
+    const jwt = await didJwt.createJWT(payload, {
+      issuer: issDid,
+      alg: 'ES256K',
+      signer,
+    });
+    const jwtVerifed = await didJwt.verifyJWT(jwt, {
+      resolver,
+      audience: audDid,
+    });
+
+    expect(jwtVerifed.verified).toBeTruthy();
+  });
+
+  it('getResolverRegistry for p256 should work', async () => {
+    const issKeyPair = p256Driver.generateKeyPair();
+    const audKeyPair = p256Driver.generateKeyPair();
+
+    const issDid = p256Driver.didFromPublicKey(issKeyPair.publicKey);
+    const audDid = p256Driver.didFromPublicKey(audKeyPair.publicKey);
+
+    const signer = p256Driver.signerFromSecretKey(issKeyPair.secretKey);
+    const resolver = new didResolver.Resolver(
+      ed25519Driver.getResolverRegistry()
+    );
+
+    const payload: didJwt.JWTPayload = {
+      aud: audDid,
+      name: 'aaa',
+    };
+
+    const jwt = await didJwt.createJWT(payload, {
+      issuer: issDid,
+      alg: 'ES256',
+      signer,
+    });
+    const jwtVerifed = await didJwt.verifyJWT(jwt, {
+      resolver,
+      audience: audDid,
+    });
+
+    expect(jwtVerifed.verified).toBeTruthy();
   });
 });

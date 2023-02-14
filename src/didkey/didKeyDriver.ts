@@ -1,9 +1,9 @@
 import * as didJwt from 'did-jwt';
+
 import * as didResolver from 'did-resolver';
 
-import * as didResolverUtils from '../utils/didResolverUtils';
-import * as errors from '../errors';
 import * as types from '../types';
+import * as didResolverImpl from './didResolverImpl';
 
 /**
  * The driver for did:key
@@ -47,20 +47,8 @@ export class DidKeyDriver {
   signerFromSecretKey = (secretKey: Uint8Array): didJwt.Signer => {
     return this.#alg.signerFromSecretKey(secretKey);
   };
-}
 
-/**
- * the did resolver function
- *
- * @param did - the DID
- * @param parsed the parsed DID
- * @param resolver the resolver
- * @param options the resolver options
- * @returns the DID resolution result
- */
-export const resolver: didResolver.DIDResolver = async (
-  did,
-  parsed,
-  resolver,
-  options
-): Promise<didResolver.DIDResolutionResult> => {};
+  getResolverRegistry = (): didResolver.ResolverRegistry => {
+    return { key: didResolverImpl.resolver };
+  };
+}

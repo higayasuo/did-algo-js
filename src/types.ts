@@ -28,6 +28,8 @@ export type JsonWebKeyXY = {
   y: string;
 };
 
+export type AlgName = 'EdDSA' | 'ES256K' | 'ES256';
+
 /**
  * crypto algorithm
  */
