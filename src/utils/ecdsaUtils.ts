@@ -4,10 +4,10 @@ import * as u8a from 'uint8arrays';
 import * as types from '../types';
 
 /**
- * Converts the ec key pair to the key pair
+ * Converts the elliptic curve key pair to a key pair
  *
- * @param ecKeyPair - elliptic curve key pair
- * @returns the key pair
+ * @param ecKeyPair - the elliptic curve key pair
+ * @returns a key pair
  */
 export const keyPairFromECKeyPair = (
   ecKeyPair: elliptic.ec.KeyPair
@@ -19,11 +19,11 @@ export const keyPairFromECKeyPair = (
 };
 
 /**
- * Converts the secret key to the key pair
+ * Converts the secret key to a key pair
  *
- * @param ecKeyPair - elliptic curve key pair
+ * @param ecKeyPair - the elliptic curve key pair
  * @param secretKey - the secret key
- * @returns the key pair
+ * @returns a key pair
  */
 export const keyPairFromSecretKey = (
   ec: elliptic.ec,
@@ -35,10 +35,10 @@ export const keyPairFromSecretKey = (
 };
 
 /**
- * Generates the key pair
+ * Generates a key pair
  *
- * @param ec - elliptic curve
- * @returns the key pair
+ * @param ec - the elliptic curve
+ * @returns a key pair
  */
 export const generateKeyPair = (ec: elliptic.ec): types.KeyPair => {
   return keyPairFromECKeyPair(ec.genKeyPair());
@@ -47,8 +47,8 @@ export const generateKeyPair = (ec: elliptic.ec): types.KeyPair => {
 /**
  * Converts the public key to x and y
  *
- * @param - ec elliptic curve
- * @param - publicKey the public key
+ * @param ec - the elliptic curve
+ * @param publicKey - the public key
  * @returns x and y
  */
 export const xyFromPublicKey = (

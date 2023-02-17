@@ -8,10 +8,10 @@ import * as errors from '../errors';
  * the did resolver function
  *
  * @param did - the DID
- * @param parsed the parsed DID
- * @param resolver the resolver
- * @param options the resolver options
- * @returns the DID resolution result
+ * @param parsed - the parsed DID
+ * @param resolver - the resolver
+ * @param options - the resolver options
+ * @returns a DID resolution result
  */
 export const resolver: didResolver.DIDResolver = async (
   did,

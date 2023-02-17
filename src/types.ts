@@ -1,6 +1,37 @@
 import * as didResolver from 'did-resolver';
 import * as didJwt from 'did-jwt';
 
+export type AlgName = 'EdDSA' | 'ES256K' | 'ES256';
+
+export type JWTPayload = Partial<didJwt.JWTPayload>;
+
+export type JWTOptions = Omit<didJwt.JWTOptions, 'alg'>;
+
+export type JWTHeader = Omit<didJwt.JWTHeader, 'alg'> & {
+  alg: AlgName;
+};
+
+/**
+ * PartialRequired
+ *
+ * @example
+ *    type Props = {
+ *      name?: string;
+ *      age?: number;
+ *      visible?: boolean;
+ *    };
+ *
+ *    // Expect: { name?: string; age?: number; visible?: boolean; }
+ *    type Props = PartialRequired<Props>;
+ *
+ *    // Expect: { name?: string; age: number; visible: boolean; }
+ *    type Props = PartialRequired<Props, 'age' | 'visible'>;
+ */
+export type PartialRequired<
+  T extends object,
+  K extends keyof T = keyof T
+> = Required<Pick<T, K>> & Omit<T, K>;
+
 /**
  * Overrides the different types of checks performed on the JWT besides the signature check
  */
@@ -18,7 +49,7 @@ export interface JWTVerifyPolicies {
 }
 
 /**
- * Result object returned by {@link verifyJWT}
+ * Result object returned by verifyJWT
  */
 export type TypedJWTVerified<T extends didJwt.JWTPayload = didJwt.JWTPayload> =
   {
@@ -59,7 +90,7 @@ export type TypedJWTVerified<T extends didJwt.JWTPayload = didJwt.JWTPayload> =
   };
 
 /**
- * the key pair
+ * key pair
  */
 export type KeyPair = {
   publicKey: Uint8Array;
@@ -76,56 +107,54 @@ export type JsonWebKeyXY = {
   y: string;
 };
 
-export type AlgName = 'EdDSA' | 'ES256K' | 'ES256';
-
 /**
  * crypto algorithm
  */
 export interface Alg {
   /**
-   * Generates the key pair
+   * Generates a key pair
    *
-   * @returns the key pair
+   * @returns a key pair
    */
   generateKeyPair: () => KeyPair;
 
   /**
-   * Converts the secret key to the key pair
+   * Converts the secret key to a key pair
    *
    * @param secretKey - the secret key
-   * @returns the key pair
+   * @returns a key pair
    */
   keyPairFromSecretKey: (secretKey: Uint8Array) => KeyPair;
 
   /**
-   * Converts the public key to the base58btc multibase
+   * Converts the public key to a base58btc multibase
    *
    * @param publicKey - the public key
-   * @returns the base58btc multibase
+   * @returns a base58btc multibase
    */
   multibaseFromPublicKey: (publicKey: Uint8Array) => string;
 
   /**
-   * Converts the base58btc multibase to the public key
+   * Converts the base58btc multibase to a public key
    *
    * @param multibase - the base58btc multibase
-   * @returns the public key
+   * @returns a public key
    */
   publicKeyFromMultibase: (multibase: string) => Uint8Array;
 
   /**
-   * Creates the signer from the secret key
+   * Creates a signer from the secret key
    *
-   * @param secretKey
-   * @returns the signer
+   * @param secretKey - the secret key
+   * @returns a signer
    */
   signerFromSecretKey: (secretKey: Uint8Array) => didJwt.Signer;
 
   /**
    * Creates the publicKeyJWK object from the public key
    *
-   * @param publicKey
-   * @returns the publicKeyJwk object
+   * @param publicKey - the public key
+   * @returns a publicKeyJwk object
    */
   publicKeyJwkFromPublicKey: (publicKey: Uint8Array) => didResolver.JsonWebKey;
 }

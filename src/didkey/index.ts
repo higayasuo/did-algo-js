@@ -24,10 +24,10 @@ export const secp256k1Driver = new didKeyDriver.DIDKeyDriver(
 export const p256Driver = new didKeyDriver.DIDKeyDriver(p256Alg.p256Alg);
 
 /**
- * Returns the did:key driver
+ * Returns a did:key driver
  *
  * @param algName - the crypto algorithm name
- * @returns the did:key driver
+ * @returns a did:key driver
  */
 export const getDriver = (
   algName: types.AlgName

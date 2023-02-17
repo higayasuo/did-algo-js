@@ -10,29 +10,29 @@ const p256 = new elliptic.ec('p256');
 
 export const p256Alg: types.Alg = {
   /**
-   * Generates the key pair
+   * Generates a key pair
    *
-   * @returns the key pair
+   * @returns a key pair
    */
   generateKeyPair: (): types.KeyPair => {
     return ecdsaUtils.generateKeyPair(p256);
   },
 
   /**
-   * Converts the secret key to the key pair
+   * Converts the secret key to a key pair
    *
    * @param secretKey - the secret key
-   * @returns the key pair
+   * @returns a key pair
    */
   keyPairFromSecretKey: (secretKey: Uint8Array): types.KeyPair => {
     return ecdsaUtils.keyPairFromSecretKey(p256, secretKey);
   },
 
   /**
-   * Converts the public key to the base58btc multibase
+   * Converts the public key to a base58btc multibase
    *
    * @param publicKey - the public key
-   * @returns the base58btc multibase
+   * @returns a base58btc multibase
    */
   multibaseFromPublicKey: (publicKey: Uint8Array): string => {
     return multibaseUtils.multibaseFromPublicKey(
@@ -42,10 +42,10 @@ export const p256Alg: types.Alg = {
   },
 
   /**
-   * Converts the base58btc multibase to the public key
+   * Converts the base58btc multibase to a public key
    *
    * @param multibase - the base58btc multibase
-   * @returns the public key
+   * @returns a public key
    */
   publicKeyFromMultibase: (multibase: string): Uint8Array => {
     return multibaseUtils.publicKeyFromMultibase(
@@ -55,20 +55,20 @@ export const p256Alg: types.Alg = {
   },
 
   /**
-   * Creates the signer from the secret key
+   * Creates a signer from the secret key
    *
-   * @param secretKey
-   * @returns the signer
+   * @param secretKey - the secret key
+   * @returns a signer
    */
   signerFromSecretKey: (secretKey: Uint8Array): didJwt.Signer => {
     return didJwt.ES256Signer(secretKey);
   },
 
   /**
-   * Creates the publicKeyJWK object from the public key
+   * Creates a publicKeyJWK object from the public key
    *
-   * @param publicKey
-   * @returns the publicKeyJwk object
+   * @param publicKey - the public key
+   * @returns a publicKeyJwk object
    */
   publicKeyJwkFromPublicKey: (
     publicKey: Uint8Array

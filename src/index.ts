@@ -1,8 +1,14 @@
-import * as didjwt from 'did-jwt';
+import * as didJwt from 'did-jwt';
 
-import { AlgName } from './types';
+import * as types from './types';
 import * as didKey from './didkey';
 import * as didKeyDriver from './didkey/didKeyDriver';
+
+export type JWTPayload = types.JWTPayload;
+
+export type JWTOptions = types.JWTOptions;
+
+export type JWTHeader = types.JWTHeader;
 
 /**
  * Returns the did:key driver
@@ -14,33 +20,56 @@ import * as didKeyDriver from './didkey/didKeyDriver';
  * @returns the did:key driver
  */
 export const getDIDKeyDriver = (
-  algName: AlgName
+  algName: types.AlgName
 ): didKeyDriver.DIDKeyDriver => {
   return didKey.getDriver(algName);
 };
 
-// /**
-//  *  Creates a signed JWT
-//  *
-//  *  @example
-//  *  const signer = ES256KSigner(process.env.PRIVATE_KEY)
-//  *  createJWT({address: '5A8bRWU3F7j3REx3vkJ...', signer}, {key1: 'value', key2: ..., ... }).then(jwt => {
-//  *      ...
-//  *  })
-//  *
-//  *  @param    {Object}            payload               payload object
-//  *  @param    {Object}            [options]             an unsigned credential object
-//  *  @param    {String}            options.issuer        The DID of the issuer (signer) of JWT
-//  *  @param    {String}            options.alg           [DEPRECATED] The JWT signing algorithm to use. Supports:
-//  *   [ES256K, ES256K-R, Ed25519, EdDSA], Defaults to: ES256K. Please use `header.alg` to specify the algorithm
-//  *  @param    {Signer}            options.signer        a `Signer` function, Please see `ES256KSigner` or `EdDSASigner`
-//  *  @param    {boolean}           options.canonicalize  optional flag to canonicalize header and payload before signing
-//  *  @param    {Object}            header                optional object to specify or customize the JWT header
-//  *  @return   {Promise<Object, Error>}                  a promise which resolves with a signed JSON Web Token or
-//  *   rejects with an error
-//  */
-// export async function createJWT(
-//   payload: Partial<JWTPayload>,
-//   { issuer, signer, alg, expiresIn, canonicalize }: JWTOptions,
-//   header: Partial<JWTHeader> = {}
-// ): Promise<string> {
+/**
+ *  Creates a signed JWT
+ *
+ *  @example
+ *  const driver = getDIDKeyDriver('EdDSA');
+ *
+ *  const issuerKeyPair = driver.generateKeyPair();
+ *  const audienceKeyPair = driver.generateKeyPair();
+ *
+ *  const issuerDID = driver.didFromPublicKey(issuerKeyPair.publicKey);
+ *  const audienceDID = driver.didFromPublicKey(audienceKeyPair.publicKey);
+ *
+ *  const issuerSigner = driver.signerFromSecretKey(issuerKeyPair.secretKey);
+ *
+ *  type MyPayload = JWTPayload & {
+ *    name: string;
+ *  };
+ *
+ *  const payload: MyPayload = {
+ *    aud: audienceDID,
+ *    name: 'My name',
+ *  };
+ *  const options: JWTOptions = {
+ *    issuer: issuerDID,
+ *    signer: issuerSigner
+ *  }
+ *  const header: JWTHeader = {
+ *    alg: 'EdDSA'
+ *  }
+ *
+ *  const jwt = await createJWT(payload, options, header);
+ *
+ *  @param payload - the JWT payload
+ *  @param options - the JWT options
+ *  @param header - the JWT header
+ *  @return a signed JWT
+ */
+export const createJWT = async (
+  payload: JWTPayload,
+  options: JWTOptions,
+  header: JWTHeader
+): Promise<string> => {
+  if (options.canonicalize === undefined) {
+    options.canonicalize = true;
+  }
+
+  return didJwt.createJWT(payload, options, header);
+};

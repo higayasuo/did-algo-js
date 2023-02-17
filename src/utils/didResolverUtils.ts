@@ -3,11 +3,11 @@ import * as didResolver from 'did-resolver';
 import * as errors from '../errors';
 
 /**
- * Returns the did resolution result for error
+ * Returns a did resolution result for error
  *
  * @param error - the error code
  * @param message - the error message
- * @returns the did resolution result for erroor
+ * @returns a did resolution result for erroor
  */
 export const errorDIDResolutionResult = (
   error: string,
@@ -23,6 +23,12 @@ export const errorDIDResolutionResult = (
   };
 };
 
+/**
+ * Returns a did resolution result for error from the error message
+ *
+ * @param errorMessage - the error message
+ * @returns a did resolution result for error
+ */
 export const errorDIDResolutionResultFromErrorMessage = (
   errorMessage: string
 ): didResolver.DIDResolutionResult => {

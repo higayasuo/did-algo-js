@@ -20,11 +20,11 @@ export const MULTICODEC_SECP256K1_PUB_HEADER = Uint8Array.from([231, 1]);
 export const MULTICODEC_P256_PUB_HEADER = Uint8Array.from([128, 36]);
 
 /**
- * Converts the public key to the base58btc multibase
+ * Converts the public key to a base58btc multibase
  *
  * @param multicodeHeader - the multicodec header
  * @param publicKey - the public key
- * @returns the base58btc multibase
+ * @returns a base58btc multibase
  */
 export const multibaseFromPublicKey = (
   multicodeHeader: Uint8Array,
@@ -39,10 +39,10 @@ export const multibaseFromPublicKey = (
 };
 
 /**
- * Converts the base58btc multibase to the public key
+ * Converts the base58btc multibase to aaa public key
  *
  * @param multibase - the base58btc multibase
- * @returns the public key
+ * @returns a public key
  */
 export const publicKeyFromMultibase = (
   multicodecHeader: Uint8Array,
