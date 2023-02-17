@@ -19,6 +19,16 @@ export const secp256k1Alg: types.Alg = {
   },
 
   /**
+   * Converts the secret key to the key pair
+   *
+   * @param secretKey - the secret key
+   * @returns the key pair
+   */
+  keyPairFromSecretKey: (secretKey: Uint8Array): types.KeyPair => {
+    return ecdsaUtils.keyPairFromSecretKey(secp256k1, secretKey);
+  },
+
+  /**
    * Converts the public key to the base58btc multibase
    *
    * @param publicKey - the public key

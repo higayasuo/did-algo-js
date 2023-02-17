@@ -8,11 +8,29 @@ import * as ecdsaUtils from './ecdsaUtils';
 const secp256k1 = new elliptic.ec('secp256k1');
 
 describe('ecdsaUtils', () => {
-  it('generationKeyPair should work', () => {
-    const actual = ecdsaUtils.generateKeyPair(secp256k1);
+  it('keyPairFromECKeyPair should work', () => {
+    const ecKeyPair = secp256k1.genKeyPair();
+    const keyPair = ecdsaUtils.keyPairFromECKeyPair(ecKeyPair);
 
-    expect(actual.publicKey.length).toEqual(33);
-    expect(actual.secretKey.length).toEqual(32);
+    expect(keyPair.publicKey.length).toEqual(33);
+    expect(keyPair.secretKey.length).toEqual(32);
+  });
+
+  it('keyPairFromSecretKey should work', () => {
+    const keyPair = ecdsaUtils.generateKeyPair(secp256k1);
+    const keyPair2 = ecdsaUtils.keyPairFromSecretKey(
+      secp256k1,
+      keyPair.secretKey
+    );
+
+    expect(keyPair).toEqual(keyPair2);
+  });
+
+  it('generationKeyPair should work', () => {
+    const keyPair = ecdsaUtils.generateKeyPair(secp256k1);
+
+    expect(keyPair.publicKey.length).toEqual(33);
+    expect(keyPair.secretKey.length).toEqual(32);
   });
 
   it('xyFromPublicKey should work', () => {

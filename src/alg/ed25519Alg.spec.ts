@@ -14,6 +14,13 @@ describe('ed25519Alg', () => {
     expect(keyPair.secretKey.length).to.eq(64);
   });
 
+  it('keyPairFromSecretKey should work', () => {
+    const keyPair = ed25519Alg.generateKeyPair();
+    const keyPair2 = ed25519Alg.keyPairFromSecretKey(keyPair.secretKey);
+
+    expect(keyPair).toEqual(keyPair2);
+  });
+
   it('multibaseFromPublicKey should work', () => {
     const keyPair = ed25519Alg.generateKeyPair();
 

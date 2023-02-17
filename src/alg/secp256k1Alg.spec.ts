@@ -17,6 +17,13 @@ describe('secp256k1Alg', () => {
     expect(keyPair.secretKey.length).to.eq(32);
   });
 
+  it('keyPairFromSecretKey should work', () => {
+    const keyPair = secp256k1Alg.generateKeyPair();
+    const keyPair2 = secp256k1Alg.keyPairFromSecretKey(keyPair.secretKey);
+
+    expect(keyPair).toEqual(keyPair2);
+  });
+
   it('multibaseFromPublicKey should work', () => {
     const keyPair = secp256k1Alg.generateKeyPair();
 

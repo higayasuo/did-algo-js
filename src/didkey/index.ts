@@ -7,21 +7,21 @@ import * as didKeyDriver from './didKeyDriver';
 /**
  * the ed25519 driver
  */
-export const ed25519Driver = new didKeyDriver.DidKeyDriver(
+export const ed25519Driver = new didKeyDriver.DIDKeyDriver(
   ed25519Alg.ed25519Alg
 );
 
 /**
  * the secp256k1 driver
  */
-export const secp256k1Driver = new didKeyDriver.DidKeyDriver(
+export const secp256k1Driver = new didKeyDriver.DIDKeyDriver(
   secp256k1Alg.secp256k1Alg
 );
 
 /**
  * the p256 driver
  */
-export const p256Driver = new didKeyDriver.DidKeyDriver(p256Alg.p256Alg);
+export const p256Driver = new didKeyDriver.DIDKeyDriver(p256Alg.p256Alg);
 
 /**
  * Returns the did:key driver
@@ -31,7 +31,7 @@ export const p256Driver = new didKeyDriver.DidKeyDriver(p256Alg.p256Alg);
  */
 export const getDriver = (
   algName: types.AlgName
-): didKeyDriver.DidKeyDriver => {
+): didKeyDriver.DIDKeyDriver => {
   if (algName === 'EdDSA') {
     return ed25519Driver;
   } else if (algName === 'ES256K') {

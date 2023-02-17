@@ -15,6 +15,19 @@ export const ed25519Alg: types.Alg = {
   generateKeyPair: ed25519.generateKeyPair,
 
   /**
+   * Converts the secret key to the key pair
+   *
+   * @param secretKey - the secret key
+   * @returns the key pair
+   */
+  keyPairFromSecretKey: (secretKey: Uint8Array): types.KeyPair => {
+    return {
+      publicKey: secretKey.slice(32),
+      secretKey,
+    };
+  },
+
+  /**
    * Converts the public key to the base58btc multibase
    *
    * @param publicKey - the public key

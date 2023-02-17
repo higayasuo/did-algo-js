@@ -17,6 +17,13 @@ describe('p256Alg', () => {
     expect(keyPair.secretKey.length).to.eq(32);
   });
 
+  it('keyPairFromSecretKey should work', () => {
+    const keyPair = p256Alg.generateKeyPair();
+    const keyPair2 = p256Alg.keyPairFromSecretKey(keyPair.secretKey);
+
+    expect(keyPair).toEqual(keyPair2);
+  });
+
   it('multibaseFromPublicKey should work', () => {
     const keyPair = p256Alg.generateKeyPair();
 

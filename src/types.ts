@@ -1,14 +1,62 @@
 import * as didResolver from 'did-resolver';
 import * as didJwt from 'did-jwt';
 
-export type TypedJWTPayload<T = any> = T & didJwt.JWTPayload;
+/**
+ * Overrides the different types of checks performed on the JWT besides the signature check
+ */
+export interface JWTVerifyPolicies {
+  // overrides the timestamp against which the validity interval is checked
+  now?: number;
+  // when set to false, the timestamp checks ignore the Not Before(`nbf`) property
+  nbf?: boolean;
+  // when set to false, the timestamp checks ignore the Issued At(`iat`) property
+  iat?: boolean;
+  // when set to false, the timestamp checks ignore the Expires At(`exp`) property
+  exp?: boolean;
+  // when set to false, the JWT audience check is skipped
+  aud?: boolean;
+}
 
-export type TypedJWTDecoded<T = any> = {
-  header: didJwt.JWTHeader;
-  payload: TypedJWTPayload<T>;
-  signature: string;
-  data: string;
-};
+/**
+ * Result object returned by {@link verifyJWT}
+ */
+export type TypedJWTVerified<T extends didJwt.JWTPayload = didJwt.JWTPayload> =
+  {
+    /**
+     * Set to true for a JWT that passes all the required checks minus any verification overrides.
+     */
+    verified: true;
+
+    /**
+     * The decoded JWT payload
+     */
+    payload: T;
+
+    /**
+     * The result of resolving the issuer DID
+     */
+    didResolutionResult: didResolver.DIDResolutionResult;
+
+    /**
+     * the issuer DID
+     */
+    issuer: string;
+
+    /**
+     * The public key of the issuer that matches the JWT signature
+     */
+    signer: didResolver.VerificationMethod;
+
+    /**
+     * The original JWT that was verified
+     */
+    jwt: string;
+
+    /**
+     * Any overrides that were used during verification
+     */
+    policies?: JWTVerifyPolicies;
+  };
 
 /**
  * the key pair
@@ -40,6 +88,14 @@ export interface Alg {
    * @returns the key pair
    */
   generateKeyPair: () => KeyPair;
+
+  /**
+   * Converts the secret key to the key pair
+   *
+   * @param secretKey - the secret key
+   * @returns the key pair
+   */
+  keyPairFromSecretKey: (secretKey: Uint8Array) => KeyPair;
 
   /**
    * Converts the public key to the base58btc multibase

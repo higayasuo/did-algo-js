@@ -8,7 +8,7 @@ import * as didResolverImpl from './didResolverImpl';
 /**
  * The driver for did:key
  */
-export class DidKeyDriver {
+export class DIDKeyDriver {
   #alg: types.Alg;
 
   /**
@@ -26,6 +26,16 @@ export class DidKeyDriver {
    */
   generateKeyPair(): types.KeyPair {
     return this.#alg.generateKeyPair();
+  }
+
+  /**
+   * Converts the secret key to the key pair
+   *
+   * @param secretKey - the secret key
+   * @returns the key pair
+   */
+  keyPairFromSecretKey(secretKey: Uint8Array): types.KeyPair {
+    return this.#alg.keyPairFromSecretKey(secretKey);
   }
 
   /**

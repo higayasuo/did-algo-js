@@ -1,7 +1,9 @@
 import { describe, it, expect } from 'vitest';
 
-describe('mocha', () => {
-  it('mocha should work', () => {
-    expect(1 + 1).to.eq(2);
+import * as didKit from '.';
+
+describe('did-jwt-toolkit', () => {
+  it('getDIDKeyDriver should work', () => {
+    expect(didKit.getDIDKeyDriver('EdDSA')).toBeDefined();
   });
 });
