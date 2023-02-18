@@ -51,43 +51,47 @@ export interface JWTVerifyPolicies {
 /**
  * Result object returned by verifyJWT
  */
-export type TypedJWTVerified<T extends didJwt.JWTPayload = didJwt.JWTPayload> =
-  {
-    /**
-     * Set to true for a JWT that passes all the required checks minus any verification overrides.
-     */
-    verified: true;
+export type JWTVerified<T extends didJwt.JWTPayload = didJwt.JWTPayload> = {
+  /**
+   * Set to true for a JWT that passes all the required checks minus any verification overrides.
+   */
+  verified: true;
 
-    /**
-     * The decoded JWT payload
-     */
-    payload: T;
+  /**
+   * The decoded JWT payload
+   */
+  payload: T;
 
-    /**
-     * The result of resolving the issuer DID
-     */
-    didResolutionResult: didResolver.DIDResolutionResult;
+  /**
+   * The result of resolving the issuer DID
+   */
+  didResolutionResult: didResolver.DIDResolutionResult;
 
-    /**
-     * the issuer DID
-     */
-    issuer: string;
+  /**
+   * the issuer DID
+   */
+  issuer: string;
 
-    /**
-     * The public key of the issuer that matches the JWT signature
-     */
-    signer: didResolver.VerificationMethod;
+  /**
+   * The public key of the issuer that matches the JWT signature
+   */
+  signer: didResolver.VerificationMethod;
 
-    /**
-     * The original JWT that was verified
-     */
-    jwt: string;
+  /**
+   * The original JWT that was verified
+   */
+  jwt: string;
 
-    /**
-     * Any overrides that were used during verification
-     */
-    policies?: JWTVerifyPolicies;
-  };
+  /**
+   * Any overrides that were used during verification
+   */
+  policies?: JWTVerifyPolicies;
+};
+
+export type JWTVerifyOptions = PartialRequired<
+  Omit<didJwt.JWTVerifyOptions, 'auth'>,
+  'resolver'
+>;
 
 /**
  * key pair
