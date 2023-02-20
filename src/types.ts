@@ -1,15 +1,8 @@
 import * as didResolver from 'did-resolver';
 import * as didJwt from 'did-jwt';
+import * as didJwtVc from 'did-jwt-vc';
 
 export type AlgName = 'EdDSA' | 'ES256K' | 'ES256';
-
-export type JWTPayload = Partial<didJwt.JWTPayload>;
-
-export type JWTOptions = Omit<didJwt.JWTOptions, 'alg'>;
-
-export type JWTHeader = Omit<didJwt.JWTHeader, 'alg'> & {
-  alg: AlgName;
-};
 
 /**
  * PartialRequired
@@ -33,65 +26,41 @@ export type PartialRequired<
 > = Required<Pick<T, K>> & Omit<T, K>;
 
 /**
- * Overrides the different types of checks performed on the JWT besides the signature check
+ * Replaces the matching property types of T with the ones in U
  */
-export interface JWTVerifyPolicies {
-  // overrides the timestamp against which the validity interval is checked
-  now?: number;
-  // when set to false, the timestamp checks ignore the Not Before(`nbf`) property
-  nbf?: boolean;
-  // when set to false, the timestamp checks ignore the Issued At(`iat`) property
-  iat?: boolean;
-  // when set to false, the timestamp checks ignore the Expires At(`exp`) property
-  exp?: boolean;
-  // when set to false, the JWT audience check is skipped
-  aud?: boolean;
-}
+export type Replace<T, U> = Omit<T, keyof U> & U;
+
+/**
+ * the JWT payload
+ */
+export type JWTPayload = Partial<didJwt.JWTPayload>;
+
+/**
+ * the JWT header
+ */
+export type JWTHeader = Partial<didJwt.JWTHeader>;
+
+/**
+ * the options for createJWT
+ */
+export type CreateJWTOptions = Partial<didJwt.JWTOptions> & {
+  header?: JWTHeader;
+};
+
+/**
+ * the issuer
+ */
+export type Issuer = didJwtVc.Issuer;
 
 /**
  * Result object returned by verifyJWT
  */
-export type JWTVerified<T extends didJwt.JWTPayload = didJwt.JWTPayload> = {
-  /**
-   * Set to true for a JWT that passes all the required checks minus any verification overrides.
-   */
-  verified: true;
-
-  /**
-   * The decoded JWT payload
-   */
-  payload: T;
-
-  /**
-   * The result of resolving the issuer DID
-   */
-  didResolutionResult: didResolver.DIDResolutionResult;
-
-  /**
-   * the issuer DID
-   */
-  issuer: string;
-
-  /**
-   * The public key of the issuer that matches the JWT signature
-   */
-  signer: didResolver.VerificationMethod;
-
-  /**
-   * The original JWT that was verified
-   */
-  jwt: string;
-
-  /**
-   * Any overrides that were used during verification
-   */
-  policies?: JWTVerifyPolicies;
-};
-
-export type JWTVerifyOptions = PartialRequired<
-  Omit<didJwt.JWTVerifyOptions, 'auth'>,
-  'resolver'
+export type VerifiedJWT<T> = Replace<
+  didJwt.JWTVerified,
+  { payload: didJwt.JWTPayload & T }
 >;
+
+export type VerifyJWTOptions = Partial<didJwt.JWTVerifyOptions>;
 
 /**
  * key pair
@@ -153,6 +122,14 @@ export interface Alg {
    * @returns a signer
    */
   signerFromSecretKey: (secretKey: Uint8Array) => didJwt.Signer;
+
+  /**
+   * Converts the key pair to an issuer
+   *
+   * @param keyPair - the key pair
+   * @returns an issuer
+   */
+  issuerFromKeyPair: (keyPair: KeyPair) => didJwtVc.Issuer;
 
   /**
    * Creates the publicKeyJWK object from the public key

@@ -50,15 +50,36 @@ describe('secp256k1Alg', () => {
     expect(signer).to.toBeDefined();
 
     const message = u8a.fromString('hello', 'utf-8');
-
     const sig = (await signer(message)) as string;
     const rawSig = u8a.fromString(sig, 'base64url');
     const r = u8a.toString(rawSig.slice(0, 32), 'hex');
     const s = u8a.toString(rawSig.slice(32, 64), 'hex');
     const hash = sha256.hash(message);
 
-    expect(secp256k1.keyFromPublic(keyPair.publicKey).verify(hash, { r, s })).to
-      .be.true;
+    expect(
+      secp256k1.keyFromPublic(keyPair.publicKey).verify(hash, { r, s })
+    ).toBeTruthy();
+  });
+
+  it('issuerFromKeyKeyPair should work', async () => {
+    const keyPair = secp256k1Alg.generateKeyPair();
+    const issuer = secp256k1Alg.issuerFromKeyPair(keyPair);
+
+    expect(issuer).to.toBeDefined();
+    expect(issuer.did.startsWith('did:key:')).toBeTruthy();
+    expect(issuer.signer).toBeDefined();
+    expect(issuer.alg).toEqual('ES256K');
+
+    const message = u8a.fromString('hello', 'utf-8');
+    const sig = (await issuer.signer(message)) as string;
+    const rawSig = u8a.fromString(sig, 'base64url');
+    const r = u8a.toString(rawSig.slice(0, 32), 'hex');
+    const s = u8a.toString(rawSig.slice(32, 64), 'hex');
+    const hash = sha256.hash(message);
+
+    expect(
+      secp256k1.keyFromPublic(keyPair.publicKey).verify(hash, { r, s })
+    ).toBeTruthy();
   });
 
   it('publicKeyJwkFromPublicKey should work', async () => {

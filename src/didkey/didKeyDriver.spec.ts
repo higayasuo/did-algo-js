@@ -23,6 +23,16 @@ const secp256k1 = new elliptic.ec('secp256k1');
 const p256 = new elliptic.ec('p256');
 
 describe('didKeyDriver', () => {
+  it('didFromMultibase should work', () => {
+    const keyPair = ed25519Driver.generateKeyPair();
+    const multibase = ed25519Alg.ed25519Alg.multibaseFromPublicKey(
+      keyPair.publicKey
+    );
+    const result = didKeyDriver.didFromMultibase(multibase);
+
+    expect(result.startsWith('did:key:')).toBeTruthy();
+  });
+
   it('generateKeyPair should work', () => {
     const ed25519KeyPair = ed25519Driver.generateKeyPair();
     const secp256k1KeyPair = secp256k1Driver.generateKeyPair();
@@ -65,17 +75,17 @@ describe('didKeyDriver', () => {
       ed25519Driver
         .didFromPublicKey(ed25519KeyPair.publicKey)
         .startsWith('did:key:z6Mk')
-    ).to.be.true;
+    ).toBeTruthy();
     expect(
       secp256k1Driver
         .didFromPublicKey(secp256k1KeyPair.publicKey)
         .startsWith('did:key:zQ3s')
-    ).to.be.true;
+    ).toBeTruthy();
     expect(
       p256Driver
         .didFromPublicKey(p256KeyPair.publicKey)
         .startsWith('did:key:zDn')
-    ).to.be.true;
+    ).toBeTruthy();
   });
 
   it('signerFromSecretKey for ed25519 should work', async () => {
@@ -129,6 +139,16 @@ describe('didKeyDriver', () => {
 
     expect(p256.keyFromPublic(keyPair.publicKey).verify(hash, { r, s })).to.be
       .true;
+  });
+
+  it('issuerFromKeyPair should work', () => {
+    const keyPair = ed25519Driver.generateKeyPair();
+    const issuer = ed25519Driver.issuerFromKeyPair(keyPair);
+
+    expect(issuer).toBeDefined();
+    expect(issuer.did.startsWith('did:key:')).toBeTruthy();
+    expect(issuer.signer).toBeDefined();
+    expect(issuer.alg).toEqual('EdDSA');
   });
 
   it('getResolverRegistry for ed25519 should work', async () => {

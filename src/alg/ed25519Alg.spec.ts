@@ -55,6 +55,24 @@ describe('ed25519Alg', () => {
     expect(ed25519.verify(keyPair.publicKey, message, signature)).to.be.true;
   });
 
+  it('issuerFromKeyKeyPair should work', async () => {
+    const keyPair = ed25519Alg.generateKeyPair();
+    const issuer = ed25519Alg.issuerFromKeyPair(keyPair);
+
+    expect(issuer).to.toBeDefined();
+    expect(issuer.did.startsWith('did:key:')).toBeTruthy();
+    expect(issuer.signer).toBeDefined();
+    expect(issuer.alg).toEqual('EdDSA');
+
+    const message = u8a.fromString('hello', 'utf-8');
+    const signature = u8a.fromString(
+      (await issuer.signer(message)) as string,
+      'base64url'
+    );
+
+    expect(ed25519.verify(keyPair.publicKey, message, signature)).toBeTruthy();
+  });
+
   it('publicKeyJwkFromPublicKey should work', async () => {
     const keyPair = ed25519Alg.generateKeyPair();
     const signer = ed25519Alg.signerFromSecretKey(keyPair.secretKey);

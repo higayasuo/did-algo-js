@@ -1,9 +1,19 @@
 import * as didJwt from 'did-jwt';
-
+import * as didJwtVc from 'did-jwt-vc';
 import * as didResolver from 'did-resolver';
 
 import * as types from '../types';
 import * as didResolverImpl from './didResolverImpl';
+
+/**
+ * Converts the base58btc multibase to a DID
+ *
+ * @param multibase - the base58btc multibase
+ * @returns a DID
+ */
+export const didFromMultibase = (multibase: string) => {
+  return `did:key:${multibase}`;
+};
 
 /**
  * The driver for did:key
@@ -45,7 +55,7 @@ export class DIDKeyDriver {
    * @returns a DID
    */
   didFromPublicKey = (publicKey: Uint8Array): string => {
-    return `did:key:${this.#alg.multibaseFromPublicKey(publicKey)}`;
+    return didFromMultibase(this.#alg.multibaseFromPublicKey(publicKey));
   };
 
   /**
@@ -56,6 +66,16 @@ export class DIDKeyDriver {
    */
   signerFromSecretKey = (secretKey: Uint8Array): didJwt.Signer => {
     return this.#alg.signerFromSecretKey(secretKey);
+  };
+
+  /**
+   * Converts the key pair to an issuer
+   *
+   * @param keyPair - the key pair
+   * @returns an issuer
+   */
+  issuerFromKeyPair = (keyPair: types.KeyPair): didJwtVc.Issuer => {
+    return this.#alg.issuerFromKeyPair(keyPair);
   };
 
   /**

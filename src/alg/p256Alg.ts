@@ -1,10 +1,12 @@
 import * as elliptic from 'elliptic';
 import * as didResolver from 'did-resolver';
 import * as didJwt from 'did-jwt';
+import * as didJwtVc from 'did-jwt-vc';
 
 import * as types from '../types';
 import * as multibaseUtils from '../utils/multibaseUtils';
 import * as ecdsaUtils from '../utils/ecdsaUtils';
+import * as didKeyDriver from '../didkey/didKeyDriver';
 
 const p256 = new elliptic.ec('p256');
 
@@ -62,6 +64,22 @@ export const p256Alg: types.Alg = {
    */
   signerFromSecretKey: (secretKey: Uint8Array): didJwt.Signer => {
     return didJwt.ES256Signer(secretKey);
+  },
+
+  /**
+   * Converts the key pair to an issuer
+   *
+   * @param keyPair - the key pair
+   * @returns an issuer
+   */
+  issuerFromKeyPair: (keyPair: types.KeyPair): didJwtVc.Issuer => {
+    return {
+      did: didKeyDriver.didFromMultibase(
+        p256Alg.multibaseFromPublicKey(keyPair.publicKey)
+      ),
+      signer: p256Alg.signerFromSecretKey(keyPair.secretKey),
+      alg: 'ES256',
+    };
   },
 
   /**

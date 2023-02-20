@@ -1,9 +1,11 @@
 import * as ed25519 from '@stablelib/ed25519';
 import * as didResolver from 'did-resolver';
 import * as didJwt from 'did-jwt';
+import * as didJwtVc from 'did-jwt-vc';
 import * as u8a from 'uint8arrays';
 
 import * as types from '../types';
+import * as didKeyDriver from '../didkey/didKeyDriver';
 import * as multibaseUtils from '../utils/multibaseUtils';
 
 export const ed25519Alg: types.Alg = {
@@ -61,6 +63,22 @@ export const ed25519Alg: types.Alg = {
    */
   signerFromSecretKey: (secretKey: Uint8Array): didJwt.Signer => {
     return didJwt.EdDSASigner(secretKey);
+  },
+
+  /**
+   * Converts the key pair to an issuer
+   *
+   * @param keyPair - the key pair
+   * @returns an issuer
+   */
+  issuerFromKeyPair: (keyPair: types.KeyPair): didJwtVc.Issuer => {
+    return {
+      did: didKeyDriver.didFromMultibase(
+        ed25519Alg.multibaseFromPublicKey(keyPair.publicKey)
+      ),
+      signer: ed25519Alg.signerFromSecretKey(keyPair.secretKey),
+      alg: 'EdDSA',
+    };
   },
 
   /**

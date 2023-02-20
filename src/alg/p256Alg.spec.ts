@@ -61,6 +61,27 @@ describe('p256Alg', () => {
       .true;
   });
 
+  it('issuerFromKeyKeyPair should work', async () => {
+    const keyPair = p256Alg.generateKeyPair();
+    const issuer = p256Alg.issuerFromKeyPair(keyPair);
+
+    expect(issuer).to.toBeDefined();
+    expect(issuer.did.startsWith('did:key:')).toBeTruthy();
+    expect(issuer.signer).toBeDefined();
+    expect(issuer.alg).toEqual('ES256');
+
+    const message = u8a.fromString('hello', 'utf-8');
+    const sig = (await issuer.signer(message)) as string;
+    const rawSig = u8a.fromString(sig, 'base64url');
+    const r = u8a.toString(rawSig.slice(0, 32), 'hex');
+    const s = u8a.toString(rawSig.slice(32, 64), 'hex');
+    const hash = sha256.hash(message);
+
+    expect(
+      p256.keyFromPublic(keyPair.publicKey).verify(hash, { r, s })
+    ).toBeTruthy();
+  });
+
   it('publicKeyJwkFromPublicKey should work', async () => {
     const keyPair = p256Alg.generateKeyPair();
     const signer = p256Alg.signerFromSecretKey(keyPair.secretKey);
