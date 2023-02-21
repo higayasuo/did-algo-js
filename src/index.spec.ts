@@ -123,11 +123,102 @@ describe('did-jwt-toolkit', () => {
       resolver
     );
 
-    console.log(JSON.stringify(verifiedVC, undefined, 2));
     expect(verifiedVC).toBeDefined();
     expect(verifiedVC.verifiableCredential.credentialSubject.name).toEqual(
       'aaa'
     );
     expect(verifiedVC.payload.vc.credentialSubject.name).toEqual('aaa');
+  });
+
+  it('createPresentationJWT should work', async () => {
+    const driver = didJwtKit.getDIDKeyDriver('EdDSA');
+
+    const issuerKeyPair = driver.generateKeyPair();
+    const holderKeyPair = driver.generateKeyPair();
+    const verifierKeyPair = driver.generateKeyPair();
+
+    const issuer = driver.issuerFromKeyPair(issuerKeyPair);
+    const holder = driver.issuerFromKeyPair(holderKeyPair);
+    const verifierDID = driver.didFromPublicKey(verifierKeyPair.publicKey);
+
+    type MyPayload = {
+      name: string;
+    };
+
+    const vcPayload: didJwtKit.CredentialJWTPayload<MyPayload> = {
+      sub: holder.did,
+      vc: {
+        '@context': [didJwtKit.DEFAULT_CONTEXT],
+        type: [didJwtKit.DEFAULT_VC_TYPE],
+        credentialSubject: {
+          name: 'aaa',
+        },
+      },
+    };
+
+    const vcJWT = await didJwtKit.createCredentialJWT(vcPayload, issuer);
+
+    const vpPayload: didJwtKit.PresentationJWTPayload = {
+      aud: verifierDID,
+      vp: {
+        '@context': [didJwtKit.DEFAULT_CONTEXT],
+        type: [didJwtKit.DEFAULT_VP_TYPE],
+        verifiableCredential: [vcJWT],
+      },
+    };
+
+    const vpJWT = await didJwtKit.createPresentationJWT(vpPayload, holder);
+
+    expect(typeof vpJWT).toEqual('string');
+  });
+
+  it('verifyPresentationJWT should work', async () => {
+    const driver = didJwtKit.getDIDKeyDriver('EdDSA');
+
+    const issuerKeyPair = driver.generateKeyPair();
+    const holderKeyPair = driver.generateKeyPair();
+    const verifierKeyPair = driver.generateKeyPair();
+
+    const issuer = driver.issuerFromKeyPair(issuerKeyPair);
+    const holder = driver.issuerFromKeyPair(holderKeyPair);
+    const verifierDID = driver.didFromPublicKey(verifierKeyPair.publicKey);
+
+    type MyPayload = {
+      name: string;
+    };
+
+    const vcPayload: didJwtKit.CredentialJWTPayload<MyPayload> = {
+      sub: holder.did,
+      vc: {
+        '@context': [didJwtKit.DEFAULT_CONTEXT],
+        type: [didJwtKit.DEFAULT_VC_TYPE],
+        credentialSubject: {
+          name: 'aaa',
+        },
+      },
+    };
+
+    const vcJWT = await didJwtKit.createCredentialJWT(vcPayload, issuer);
+
+    const vpPayload: didJwtKit.PresentationJWTPayload = {
+      aud: verifierDID,
+      vp: {
+        '@context': [didJwtKit.DEFAULT_CONTEXT],
+        type: [didJwtKit.DEFAULT_VP_TYPE],
+        verifiableCredential: [vcJWT],
+      },
+    };
+
+    const vpJWT = await didJwtKit.createPresentationJWT(vpPayload, holder);
+
+    const resolver = new didJwtKit.Resolver(driver.getResolverRegistry());
+
+    const verifiedVP = await didJwtKit.verifyPresentationJWT<MyPayload>(
+      vpJWT,
+      resolver,
+      { audience: verifierDID }
+    );
+
+    expect(verifiedVP).toBeDefined();
   });
 });

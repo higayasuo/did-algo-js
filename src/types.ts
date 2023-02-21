@@ -37,36 +37,14 @@ export type Replace<T, U> = Omit<T, keyof U> & U;
 export type Extensible<T> = T & { [x: string]: any };
 
 /**
- * the JWT payload
- */
-export type JWTPayload = Partial<didJwt.JWTPayload>;
-
-/**
  * the JWT header
  */
 export type JWTHeader = Partial<didJwt.JWTHeader>;
 
 /**
- * the options for createJWT
- */
-export type CreateJWTOptions = Partial<didJwt.JWTOptions> & {
-  header?: JWTHeader;
-};
-
-/**
  * the issuer
  */
 export type Issuer = didJwtVc.Issuer;
-
-/**
- * Result object returned by verifyJWT
- */
-export type VerifiedJWT<T = Record<string, any>> = Replace<
-  didJwt.JWTVerified,
-  { payload: didJwt.JWTPayload & T }
->;
-
-export type VerifyJWTOptions = Partial<didJwt.JWTVerifyOptions>;
 
 export interface CredentialStatus {
   id: string;
@@ -74,39 +52,6 @@ export interface CredentialStatus {
 }
 
 type CredentialSubject = Extensible<{ id?: string }>;
-
-type VC<T> = Extensible<{
-  '@context': string[] | string;
-  type: string[] | string;
-  credentialSubject: CredentialSubject & T;
-  credentialStatus?: CredentialStatus;
-  // eslint-disable-next-line @typescript-eslint/no-explicit-any
-  evidence?: any;
-  // eslint-disable-next-line @typescript-eslint/no-explicit-any
-  termsOfUse?: any;
-}>;
-
-/**
- * A JWT payload representation of a Credential
- * @see https://www.w3.org/TR/vc-data-model/#jwt-encoding
- */
-export type CredentialJWTPayload<T> = {
-  iss?: string;
-  sub?: string;
-  vc: VC<T>;
-  nbf?: number;
-  aud?: string | string[];
-  exp?: number;
-  jti?: string;
-
-  // eslint-disable-next-line @typescript-eslint/no-explicit-any
-  [x: string]: any;
-};
-
-/**
- * Represents the creation options that can be passed to the createCredentialJWT method.
- */
-export type CreateCredentialJWTOptions = didJwtVc.CreateCredentialOptions;
 
 export type Proof = Extensible<{
   type?: string;
@@ -130,7 +75,7 @@ export type Verifiable<T> = Readonly<T> & { readonly proof: Proof };
  * Any JWT specific properties are transformed to the broader W3C variant and any app specific properties are left
  * intact
  */
-export type W3CCredential<T> = {
+export type W3CCredential<T = Record<string, any>> = {
   '@context': string[];
   id?: string;
   type: string[];
@@ -151,7 +96,123 @@ export type W3CCredential<T> = {
 };
 
 /**
- * Represents the result of a Credential verification.
+ * This data type represents a parsed Presentation payload.
+ * It is meant to be an unambiguous representation of the properties of a Presentation and is usually the result of a
+ * transformation method.
+ *
+ * The `verifiableCredential` array should contain parsed `Verifiable<Credential>` elements.
+ * Any JWT specific properties are transformed to the broader W3C variant and any other app specific properties are
+ * left intact.
+ */
+export type W3CPresentation = {
+  '@context': string[];
+  type: string[];
+  id?: string;
+  verifiableCredential: Verifiable<W3CCredential>[];
+  holder: string;
+  verifier: string[];
+  issuanceDate: string;
+  expirationDate?: string;
+};
+
+type VC<T> = Extensible<{
+  '@context': string[] | string;
+  type: string[] | string;
+  credentialSubject: CredentialSubject & T;
+  credentialStatus?: CredentialStatus;
+  // eslint-disable-next-line @typescript-eslint/no-explicit-any
+  evidence?: any;
+  // eslint-disable-next-line @typescript-eslint/no-explicit-any
+  termsOfUse?: any;
+}>;
+
+type VP = Extensible<{
+  '@context': string[] | string;
+  type: string[] | string;
+  verifiableCredential?: string[] | string;
+}>;
+
+/**
+ * the JWT payload
+ */
+export type JWTPayload = Partial<didJwt.JWTPayload>;
+
+/**
+ * A JWT payload representation of a Credential
+ * @see https://www.w3.org/TR/vc-data-model/#jwt-encoding
+ */
+export type CredentialJWTPayload<T> = {
+  iss?: string;
+  sub: string;
+  vc: VC<T>;
+  nbf?: number;
+  aud?: string | string[];
+  exp?: number;
+  jti?: string;
+
+  // eslint-disable-next-line @typescript-eslint/no-explicit-any
+  [x: string]: any;
+};
+
+/**
+ * A JWT payload representation of a Presentation
+ * @see https://www.w3.org/TR/vc-data-model/#jwt-encoding
+ */
+export type PresentationJWTPayload = {
+  aud: string | string[];
+  vp: VP;
+  iss?: string;
+  nbf?: number;
+  exp?: number;
+  jti?: string;
+  nonce?: string;
+
+  // eslint-disable-next-line @typescript-eslint/no-explicit-any
+  [x: string]: any;
+};
+
+/**
+ * the options for createJWT
+ */
+export type CreateJWTOptions = Partial<didJwt.JWTOptions> & {
+  header?: JWTHeader;
+};
+
+/**
+ * Represents the creation options that can be passed to the createCredentialJWT method.
+ */
+export type CreateCredentialJWTOptions = didJwtVc.CreateCredentialOptions;
+
+/**
+ * Represents the creation options that can be passed to the createPresentationJWT method.
+ */
+export type CreatePresentationJWTOptions = didJwtVc.CreatePresentationOptions;
+
+/**
+ * Represents the verification options that can be passed to the verifyJWT method.
+ */
+export type VerifyJWTOptions = Partial<didJwt.JWTVerifyOptions>;
+
+/**
+ * Represents the verification options that can be passed to the verifyCredentialJWT method.
+ */
+export type VerifyCredentialJWTOptions = didJwtVc.VerifyCredentialOptions;
+
+/**
+ * Represents the verification options that can be passed to the verifyPresentationJWT method.
+ */
+export type VerifyPresentationJWTOptions = didJwtVc.VerifyPresentationOptions;
+
+/**
+ * Result object returned by verifyJWT
+ */
+export type VerifiedJWT<T = Record<string, any>> = Replace<
+  didJwt.JWTVerified,
+  { payload: didJwt.JWTPayload & T }
+>;
+
+/**
+ * Represents the result of a credential verification.
  * It includes the properties produced by `did-jwt` and a W3C compliant representation of
  * the Credential that was just verified.
  *
@@ -162,11 +223,15 @@ export type VerifiedCredentialJWT<T> = VerifiedJWT<{ vc: VC<T> }> & {
 };
 
 /**
- * Represents the Verification Options that can be passed to the verifyCredential method.
- * These options are forwarded to the lower level verification code
+ * Represents the result of a credential verification.
+ * It includes the properties produced by `did-jwt` and a W3C compliant representation of
+ * the Credential that was just verified.
+ *
+ * This is usually the result of a verification method and not meant to be created by generic code.
  */
-// eslint-disable-next-line @typescript-eslint/no-explicit-any
-export type VerifyCredentialJWTOptions = didJwtVc.VerifyCredentialOptions;
+export type VerifiedPresentationJWT = VerifiedJWT<{ vp: VP }> & {
+  verifiablePresentation: Verifiable<W3CPresentation>;
+};
 
 /**
  * key pair
