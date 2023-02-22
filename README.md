@@ -56,7 +56,7 @@ const audienceDID = driver.didFromPublicKey(audienceKeyPair.publicKey);
 #### Creating a JWT
 
 Specify a `payload` and create a JWT with `issuer` using the `createJWT` function.
-You have to set an audience DID to an aud property of JWT header.
+You need to specify the audience’s DID in the aud property of the JWT header.
 
 ```typescript
 type MyPayload = {
