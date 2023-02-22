@@ -1,6 +1,6 @@
 import { describe, it, expect } from 'vitest';
 
-import * as didJwt from 'did-jwt';
+import * as types from './types';
 
 import * as didJwtKit from '.';
 
@@ -123,6 +123,8 @@ describe('did-jwt-toolkit', () => {
       resolver
     );
 
+    console.log(JSON.stringify(verifiedVC, undefined, 2));
+
     expect(verifiedVC).toBeDefined();
     expect(verifiedVC.verifiableCredential.credentialSubject.name).toEqual(
       'aaa'
@@ -213,12 +215,35 @@ describe('did-jwt-toolkit', () => {
 
     const resolver = new didJwtKit.Resolver(driver.getResolverRegistry());
 
-    const verifiedVP = await didJwtKit.verifyPresentationJWT<MyPayload>(
-      vpJWT,
-      resolver,
-      { audience: verifierDID }
-    );
+    const verifiedVP = await didJwtKit.verifyPresentationJWT(vpJWT, resolver, {
+      audience: verifierDID,
+    });
 
     expect(verifiedVP).toBeDefined();
+  });
+
+  it('typedCredential should work', async () => {
+    type MyPayload = {
+      name: string;
+    };
+
+    const vc: types.VerifiableCredential = {
+      '@context': [didJwtKit.DEFAULT_CONTEXT],
+      type: [didJwtKit.DEFAULT_VC_TYPE],
+      credentialSubject: {
+        name: 'aaa',
+      },
+      issuer: {
+        id: 'did:key:abc',
+      },
+      issuanceDate: '1234/12/31T12:34:56',
+      proof: {
+        type: 'hoge',
+      },
+    };
+
+    const typedVC = didJwtKit.typedCredential<MyPayload>(vc);
+
+    expect(typedVC.credentialSubject.name).toEqual('aaa');
   });
 });

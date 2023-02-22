@@ -431,7 +431,7 @@ export const verifyCredentialJWT = async <T>(
  *  @param options.audience - DID of the recipient of the JWT
  *  @return a promise of verified presentation JWT
  */
-export const verifyPresentationJWT = async <T>(
+export const verifyPresentationJWT = async (
   vpJWT: string,
   resolver: didResolver.Resolvable,
   options: VerifyPresentationJWTOptions = {}
@@ -442,3 +442,13 @@ export const verifyPresentationJWT = async <T>(
     options
   ) as Promise<VerifiedPresentationJWT>;
 };
+
+/**
+ * Converts the untyped verifiable credential to a typed verifiable credential
+ *
+ * @param credential - the untyped verifiable credential
+ * @returns a typed verifiable credential
+ */
+export const typedCredential = <T>(
+  credential: types.VerifiableCredential
+): types.VerifiableCredential<T> => credential as types.VerifiableCredential<T>;

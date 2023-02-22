@@ -95,6 +95,10 @@ export type W3CCredential<T = Record<string, any>> = {
   termsOfUse?: any;
 };
 
+export type VerifiableCredential<T = Record<string, any>> = Verifiable<
+  W3CCredential<T>
+>;
+
 /**
  * This data type represents a parsed Presentation payload.
  * It is meant to be an unambiguous representation of the properties of a Presentation and is usually the result of a
