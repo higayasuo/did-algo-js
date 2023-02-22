@@ -29,22 +29,21 @@
   "license": "MIT",
   "scripts": {
     "build": "microbundle",
+    "prepare": "npm run build",
     "test": "vitest"
   },
   "devDependencies": {
     "@stablelib/sha256": "^1.0.1",
-    "microbundle": "^0.15.1",
+    "@types/elliptic": "^6.4.14",
     "vitest": "^0.28.4"
   },
   "dependencies": {
     "@stablelib/ed25519": "^1.0.3",
-    "@types/elliptic": "^6.4.14",
-    "@types/varint": "^6.0.1",
     "did-jwt": "^6.11.0",
     "did-jwt-vc": "^3.1.0",
     "did-resolver": "^4.0.1",
     "elliptic": "^6.5.4",
-    "tweetnacl": "^1.0.3",
+    "microbundle": "^0.15.1",
     "uint8arrays": "^4.0.3"
   }
 }
