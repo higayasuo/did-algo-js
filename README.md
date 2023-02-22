@@ -5,7 +5,13 @@ This toolkit simplifies development with did-jwt and did-jwt-vc.
 ## Installation
 
 ```sh
-npm install git+higayasuo/did-jwt-toolkit
+npm install git+https://github.com/higayasuo/did-jwt-toolkit
+```
+
+## unnstallation
+
+```sh
+npm uninstall did-jwt-toolkit
 ```
 
 ## Usage
