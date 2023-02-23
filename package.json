@@ -28,7 +28,7 @@
   "contributors": [],
   "license": "MIT",
   "scripts": {
-    "build": "microbundle",
+    "build": "microbundle --compress=false",
     "prepare": "npm run build",
     "docs": "typedoc --options typedoc.config.json",
     "test": "vitest"
