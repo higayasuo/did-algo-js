@@ -12,7 +12,7 @@ This toolkit simplifies development with did-jwt and did-jwt-vc.
 npm install git+https://github.com/higayasuo/did-jwt-toolkit
 ```
 
-## unnstallation
+## Uninstallation
 
 ```sh
 npm uninstall did-jwt-toolkit
