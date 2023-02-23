@@ -1,10 +1,12 @@
+did-jwt-toolkit / [Exports](modules.md)
+
 # did-jwt-toolkit
 
 This toolkit simplifies development with did-jwt and did-jwt-vc.
 
 ## JSDocs
 
-[JSDocs](./jsdoc)
+[JSDocs](./jsdocs/index.html)
 
 ## Installation
 
