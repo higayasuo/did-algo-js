@@ -35,7 +35,6 @@
   },
   "devDependencies": {
     "@stablelib/sha256": "^1.0.1",
-    "@types/elliptic": "^6.4.14",
     "typedoc": "^0.23.25",
     "typedoc-plugin-markdown": "^3.14.0",
     "typedoc-plugin-missing-exports": "^1.0.0",
@@ -45,6 +44,7 @@
   },
   "dependencies": {
     "@stablelib/ed25519": "^1.0.3",
+    "@types/elliptic": "^6.4.14",
     "did-jwt": "^6.11.0",
     "did-jwt-vc": "^3.1.0",
     "did-resolver": "^4.0.1",
