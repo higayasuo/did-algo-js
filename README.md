@@ -2,6 +2,10 @@
 
 This toolkit simplifies development with did-jwt and did-jwt-vc.
 
+## JSDocs
+
+[JSDocs](./jsdocs/)
+
 ## Installation
 
 ```sh
