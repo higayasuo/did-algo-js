@@ -1,4 +1,4 @@
-import * as elliptic from 'elliptic';
+import elliptic from 'elliptic';
 import * as didResolver from 'did-resolver';
 import * as didJwt from 'did-jwt';
 import * as didJwtVc from 'did-jwt-vc';
