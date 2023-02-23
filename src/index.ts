@@ -98,7 +98,11 @@ export type VerifyPresentationJWTOptions = types.VerifyPresentationJWTOptions;
  * Returns the did:key driver
  *
  * @example
- * const driver = getDIDKeyDriver('EdDSA');
+ * ```typescript
+ * import * as didJwtKit from 'did-jwt-toolkit';
+ *
+ * const driver = didJwtDriver.getDIDKeyDriver('EdDSA');
+ * ```
  *
  * @param algName - "EdDSA", "ES256K" or "ES256"
  * @returns the did:key driver
@@ -113,10 +117,10 @@ export const getDIDKeyDriver = (
  *  Creates a signed JWT
  *
  *  @example
- *  ```ts
- *  import { getDIDDriver, JWTPayload, createJWT } from 'did-jwt-toolkit';
+ *  ```typescript
+ *  import * didJwtKit from 'did-jwt-toolkit';
  *
- *  const driver = getDIDKeyDriver('EdDSA');
+ *  const driver = didJwtKit.getDIDKeyDriver('EdDSA');
  *
  *  const issuerKeyPair = driver.generateKeyPair();
  *  const audienceKeyPair = driver.generateKeyPair();
@@ -128,12 +132,12 @@ export const getDIDKeyDriver = (
  *    name: string;
  *  };
  *
- *  const payload: JWTPayload & MyPayload = {
+ *  const payload: didJwtKit.JWTPayload & MyPayload = {
  *    aud: audienceDID,
  *    name: 'My name',
  *  };
  *
- *  const jwt = await createJWT(payload, issuer);
+ *  const jwt = await didJwtKit.createJWT(payload, issuer);
  *  ```
  *
  *  @param payload - the JWT payload
@@ -163,11 +167,10 @@ export const createJWT = async (
  *  Creates a signed credential JWT
  *
  *  @example
- *  ```ts
- *  import { getDIDKeyDriver, CredentialJWTPayload, DEFAULT_CONTEXT,
- *    DEFAULT_VC_TYPE, createCredentialJWT } from 'did-jwt-toolkit';
+ *  ```typescript
+ *  import * from didJwtKit from 'did-jwt-toolkit';
  *
- *  const driver = getDIDKeyDriver('EdDSA');
+ *  const driver = didJwtKit.getDIDKeyDriver('EdDSA');
  *
  *  const issuerKeyPair = driver.generateKeyPair();
  *  const holderKeyPair = driver.generateKeyPair();
@@ -179,18 +182,18 @@ export const createJWT = async (
  *    name: string;
  *  };
  *
- *  const payload: CredentialJWTPayload<MyPayload> = {
+ *  const payload: didJwtKit.CredentialJWTPayload<MyPayload> = {
  *    sub: holderDID,
  *    vc: {
- *      '@context': [DEFAULT_CONTEXT],
- *      type: [DEFAULT_VC_TYPE],
+ *      '@context': [didJwtKit.DEFAULT_CONTEXT],
+ *      type: [didJwtKit.DEFAULT_VC_TYPE],
  *      credentialSubject: {
  *        name: 'aaa',
  *      },
  *    },
  *  };
  *
- *  const vcJWT = await createCredentialJWT(payload, issuer);
+ *  const vcJWT = await didJwtKit.createCredentialJWT(payload, issuer);
  *  ```
  *
  *  @param payload - the credential JWT payload
@@ -210,12 +213,10 @@ export const createCredentialJWT = async (
  *  Creates a signed presentation JWT
  *
  *  @example
- *  ```ts
- *  import { getDIDKeyDriver, CredentialJWTPayload, PresentationJWTPayload,
- *    DEFAULT_CONTEXT, DEFAULT_VC_TYPE, DEFAULT_VP_TYPE,
- *    createCredentialJWT, createPresentationJWT } from 'did-jwt-toolkit';
+ *  ```typescript
+ *  import * as didJwtKit from 'did-jwt-toolkit';
  *
- *  const driver = getDIDKeyDriver('EdDSA');
+ *  const driver = didJwtKit.getDIDKeyDriver('EdDSA');
  *
  *  const issuerKeyPair = driver.generateKeyPair();
  *  const holderKeyPair = driver.generateKeyPair();
@@ -229,18 +230,18 @@ export const createCredentialJWT = async (
  *    name: string;
  *  };
  *
- *  const vcPayload: CredentialJWTPayload<MyPayload> = {
+ *  const vcPayload: didJwtKit.CredentialJWTPayload<MyPayload> = {
  *    sub: holder.did,
  *    vc: {
- *      '@context': [DEFAULT_CONTEXT],
- *      type: [DEFAULT_VC_TYPE],
+ *      '@context': [didJwtKit.DEFAULT_CONTEXT],
+ *      type: [didJwtKit.DEFAULT_VC_TYPE],
  *      credentialSubject: {
  *        name: 'aaa',
  *      },
  *    },
  *  };
  *
- *  const vcJWT = await createPresentationJWT(vpPayload, issuer);
+ *  const vcJWT = await didJwtKit.createPresentationJWT(vpPayload, issuer);
  *
  *  const vpPayload: didJwtKit.PresentationJWTPayload = {
  *    aud: verifierDID,
@@ -271,10 +272,10 @@ export const createPresentationJWT = async (
  *  Verifies given JWT
  *
  *  @example
- *  ```ts
- *  import { getDIDDriver, JWTPayload, createJWT, Resolver, verifyJWT } from 'did-jwt-toolkit';
+ *  ```typescript
+ *  import * as didJwtKit from 'did-jwt-toolkit';
  *
- *  const driver = getDIDKeyDriver('EdDSA');
+ *  const driver = didJwtKit.getDIDKeyDriver('EdDSA');
  *
  *  const issuerKeyPair = driver.generateKeyPair();
  *  const audienceKeyPair = driver.generateKeyPair();
@@ -286,23 +287,27 @@ export const createPresentationJWT = async (
  *    name: string;
  *  };
  *
- *  const payload: JWTPayload & MyPayload = {
+ *  const payload: didJwtKit.JWTPayload & MyPayload = {
  *    aud: audienceDID,
  *    name: 'My name',
  *  };
  *
- *  const jwt = await createJWT(payload, issuer);
+ *  const jwt = await didJwtKit.createJWT(payload, issuer);
  *
- *  const resolver = new Resolver(driver.getResolverRegistry());
+ *  const resolver = new didJwtKit.Resolver(driver.getResolverRegistry());
  *
- *  const verifiedJWT = await verifyJWT(jwt, resolver, {audience: audienceDID});
+ *  const verifiedJWT = await didJwtKit.verifyJWT<MyPayload>(jwt, resolver,
+ *    { audience: audienceDID });
+ *
+ *  // Type-safe access to the name property
+ *  console.log(verifiedJWT.payload.name);
  *  ```
  *
- *  @param jwt - the JSON Web Token to verify
+ *  @param jwt - the JWT to verify
  *  @param resolver - the resolver for DID
  *  @param options - the options for verifyJWT
  *  @param options.audience - DID of the recipient of the JWT
- *  @return a promise of verified JWT
+ *  @return a promise of a verified JWT
  */
 export const verifyJWT = async <T>(
   jwt: string,
@@ -322,12 +327,10 @@ export const verifyJWT = async <T>(
  *  Verifies a credential JWT
  *
  *  @example
- *  ```ts
- *  import { getDIDDriver, Resolver, CredentialJWTPayload,
- *    DEFAULT_CONTEXT, DEFAULT_VC_TYPE,
- *    createCredentialJWT, verifyCredentialJWT } from 'did-jwt-toolkit';
+ *  ```typescript
+ *  import * as didJwtKit from 'did-jwt-toolkit';
  *
- *  const driver = getDIDKeyDriver('EdDSA');
+ *  const driver = didJwtKit.getDIDKeyDriver('EdDSA');
  *
  *  const issuerKeyPair = driver.generateKeyPair();
  *  const holderKeyPair = driver.generateKeyPair();
@@ -339,29 +342,32 @@ export const verifyJWT = async <T>(
  *    name: string;
  *  };
  *
- *  const payload: CredentialJWTPayload<MyPayload> = {
+ *  const payload: didJwtKit.CredentialJWTPayload<MyPayload> = {
  *    sub: holderDID,
  *    vc: {
- *      '@context': [DEFAULT_CONTEXT],
- *      type: [DEFAULT_VC_TYPE],
+ *      '@context': [didJwtKit.DEFAULT_CONTEXT],
+ *      type: [didJwtKit.DEFAULT_VC_TYPE],
  *      credentialSubject: {
  *        name: 'aaa',
  *      },
  *    },
  *  };
  *
- *  const vcJWT = await createCredentialJWT(payload, issuer);
+ *  const vcJWT = await didJwtKit.createCredentialJWT(payload, issuer);
  *
- *  const resolver = new Resolver(driver.getResolverRegistry());
+ *  const resolver = new didJwtKit.Resolver(driver.getResolverRegistry());
  *
- *  const verifiedVC = await verifyCredentialJWT(vcJWT, resolver);
+ *  const verifiedVC = await didJwtKit.verifyCredentialJWT<MyPayload>(vcJWT, resolver);
+ *
+ *  // Type-safe access to the name property
+ *  console.log(verifiedVC.verifiableCredential.credentialSubject.name);
  *  ```
  *
- *  @param jwt - the JSON Web Token to verify
+ *  @param jwt - the credential JWT to verify
  *  @param resolver - the resolver for DID
- *  @param options - the options for verifyJWT
- *  @param options.audience - DID of the recipient of the JWT
- *  @return a promise of verified credential JWT
+ *  @param options - the options for verifyCredentialJWT
+ *  @param options.audience - the DID of the recipient of the credential JWT
+ *  @return a promise of a verified credential JWT
  */
 export const verifyCredentialJWT = async <T>(
   vcJWT: string,
@@ -377,12 +383,10 @@ export const verifyCredentialJWT = async <T>(
  *  Verifies a presentation JWT
  *
  *  @example
- *  ```ts
- *  import { getDIDKeyDriver, CredentialJWTPayload, PresentationJWTPayload,
- *    DEFAULT_CONTEXT, DEFAULT_VC_TYPE, DEFAULT_VP_TYPE,
- *    createCredentialJWT, createPresentationJWT, verifyPresentationJWT } from 'did-jwt-toolkit';
+ *  ```typescript
+ *  import * as didJwtKit from 'did-jwt-toolkit';
  *
- *  const driver = getDIDKeyDriver('EdDSA');
+ *  const driver = didJwtKit.getDIDKeyDriver('EdDSA');
  *
  *  const issuerKeyPair = driver.generateKeyPair();
  *  const holderKeyPair = driver.generateKeyPair();
@@ -396,40 +400,41 @@ export const verifyCredentialJWT = async <T>(
  *    name: string;
  *  };
  *
- *  const vcPayload: CredentialJWTPayload<MyPayload> = {
+ *  const vcPayload: didJwtKit.CredentialJWTPayload<MyPayload> = {
  *    sub: holder.did,
  *    vc: {
- *      '@context': [DEFAULT_CONTEXT],
- *      type: [DEFAULT_VC_TYPE],
+ *      '@context': [didJwtKit.DEFAULT_CONTEXT],
+ *      type: [didJwtKit.DEFAULT_VC_TYPE],
  *      credentialSubject: {
  *        name: 'aaa',
  *      },
  *    },
  *  };
  *
- *  const vcJWT = await createPresentationJWT(vpPayload, issuer);
+ *  const vcJWT = didJwtKit.await createPresentationJWT(vpPayload, issuer);
  *
- *  const vpPayload: PresentationJWTPayload = {
+ *  const vpPayload: didJwtKit.PresentationJWTPayload = {
  *    aud: verifierDID,
  *    vp: {
- *      '@context': [DEFAULT_CONTEXT],
- *      type: [DEFAULT_VP_TYPE],
+ *      '@context': [didJwtKit.DEFAULT_CONTEXT],
+ *      type: [didJwtKit.DEFAULT_VP_TYPE],
  *      verifiableCredential: [vcJWT],
  *    },
  *  };
  *
- *  const vpJWT = await didJwtKit.createPresentationJWT(vpPayload, holder);
+ *  const vpJWT = await didJwtKit.didJwtKit.createPresentationJWT(vpPayload, holder);
  *
- *  const resolver = new Resolver(driver.getResolverRegistry());
+ *  const resolver = new didJwtKit.Resolver(driver.getResolverRegistry());
  *
- *  const verifiedVP = await verifyCredentialJWT(vpJWT, resolver, {audience: verifierDID});
+ *  const verifiedVP = await didJwtKit.verifyCredentialJWT(vpJWT, resolver,
+ *    { audience: verifierDID });
  *  ```
  *
- *  @param vpJWT - the JSON Web Token to verify
+ *  @param vpJWT - the presentation JWT to verify
  *  @param resolver - the resolver for DID
  *  @param options - the options for verifyJWT
- *  @param options.audience - DID of the recipient of the JWT
- *  @return a promise of verified presentation JWT
+ *  @param options.audience - the DID of the recipient of the presentation JWT
+ *  @return a promise of the verified presentation JWT
  */
 export const verifyPresentationJWT = async (
   vpJWT: string,
