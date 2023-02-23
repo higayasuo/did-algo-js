@@ -41,7 +41,7 @@ Constructor
 
 #### Defined in
 
-[didkey/didKeyDriver.ts:28](https://github.com/higayasuo/did-jwt-toolkit/blob/0e3be2d/src/didkey/didKeyDriver.ts#L28)
+[didkey/didKeyDriver.ts:28](https://github.com/higayasuo/did-jwt-toolkit/blob/546d701/src/didkey/didKeyDriver.ts#L28)
 
 ## Properties
 
@@ -51,7 +51,7 @@ Constructor
 
 #### Defined in
 
-[didkey/didKeyDriver.ts:22](https://github.com/higayasuo/did-jwt-toolkit/blob/0e3be2d/src/didkey/didKeyDriver.ts#L22)
+[didkey/didKeyDriver.ts:22](https://github.com/higayasuo/did-jwt-toolkit/blob/546d701/src/didkey/didKeyDriver.ts#L22)
 
 ## Methods
 
@@ -75,7 +75,7 @@ a DID
 
 #### Defined in
 
-[didkey/didKeyDriver.ts:57](https://github.com/higayasuo/did-jwt-toolkit/blob/0e3be2d/src/didkey/didKeyDriver.ts#L57)
+[didkey/didKeyDriver.ts:57](https://github.com/higayasuo/did-jwt-toolkit/blob/546d701/src/didkey/didKeyDriver.ts#L57)
 
 ___
 
@@ -93,7 +93,7 @@ a key pair
 
 #### Defined in
 
-[didkey/didKeyDriver.ts:37](https://github.com/higayasuo/did-jwt-toolkit/blob/0e3be2d/src/didkey/didKeyDriver.ts#L37)
+[didkey/didKeyDriver.ts:37](https://github.com/higayasuo/did-jwt-toolkit/blob/546d701/src/didkey/didKeyDriver.ts#L37)
 
 ___
 
@@ -111,7 +111,7 @@ a resolver registry for did:key
 
 #### Defined in
 
-[didkey/didKeyDriver.ts:86](https://github.com/higayasuo/did-jwt-toolkit/blob/0e3be2d/src/didkey/didKeyDriver.ts#L86)
+[didkey/didKeyDriver.ts:86](https://github.com/higayasuo/did-jwt-toolkit/blob/546d701/src/didkey/didKeyDriver.ts#L86)
 
 ___
 
@@ -135,7 +135,7 @@ an issuer
 
 #### Defined in
 
-[didkey/didKeyDriver.ts:77](https://github.com/higayasuo/did-jwt-toolkit/blob/0e3be2d/src/didkey/didKeyDriver.ts#L77)
+[didkey/didKeyDriver.ts:77](https://github.com/higayasuo/did-jwt-toolkit/blob/546d701/src/didkey/didKeyDriver.ts#L77)
 
 ___
 
@@ -159,7 +159,7 @@ a key pair
 
 #### Defined in
 
-[didkey/didKeyDriver.ts:47](https://github.com/higayasuo/did-jwt-toolkit/blob/0e3be2d/src/didkey/didKeyDriver.ts#L47)
+[didkey/didKeyDriver.ts:47](https://github.com/higayasuo/did-jwt-toolkit/blob/546d701/src/didkey/didKeyDriver.ts#L47)
 
 ___
 
@@ -183,4 +183,4 @@ a signer
 
 #### Defined in
 
-[didkey/didKeyDriver.ts:67](https://github.com/higayasuo/did-jwt-toolkit/blob/0e3be2d/src/didkey/didKeyDriver.ts#L67)
+[didkey/didKeyDriver.ts:67](https://github.com/higayasuo/did-jwt-toolkit/blob/546d701/src/didkey/didKeyDriver.ts#L67)

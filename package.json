@@ -30,7 +30,7 @@
   "scripts": {
     "build": "microbundle",
     "prepare": "npm run build",
-    "jsdocs": "typedoc --options typedoc.config.json",
+    "docs": "typedoc --options typedoc.config.json",
     "test": "vitest"
   },
   "devDependencies": {

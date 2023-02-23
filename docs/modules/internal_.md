@@ -50,7 +50,7 @@
 
 #### Defined in
 
-[types.ts:5](https://github.com/higayasuo/did-jwt-toolkit/blob/0e3be2d/src/types.ts#L5)
+[types.ts:5](https://github.com/higayasuo/did-jwt-toolkit/blob/546d701/src/types.ts#L5)
 
 ___
 
@@ -62,7 +62,7 @@ Represents the creation options that can be passed to the createCredentialJWT me
 
 #### Defined in
 
-[types.ts:188](https://github.com/higayasuo/did-jwt-toolkit/blob/0e3be2d/src/types.ts#L188)
+[types.ts:188](https://github.com/higayasuo/did-jwt-toolkit/blob/546d701/src/types.ts#L188)
 
 ___
 
@@ -74,7 +74,7 @@ the options for createJWT
 
 #### Defined in
 
-[types.ts:181](https://github.com/higayasuo/did-jwt-toolkit/blob/0e3be2d/src/types.ts#L181)
+[types.ts:181](https://github.com/higayasuo/did-jwt-toolkit/blob/546d701/src/types.ts#L181)
 
 ___
 
@@ -86,7 +86,7 @@ Represents the creation options that can be passed to the createPresentationJWT 
 
 #### Defined in
 
-[types.ts:193](https://github.com/higayasuo/did-jwt-toolkit/blob/0e3be2d/src/types.ts#L193)
+[types.ts:193](https://github.com/higayasuo/did-jwt-toolkit/blob/546d701/src/types.ts#L193)
 
 ___
 
@@ -124,7 +124,7 @@ https://www.w3.org/TR/vc-data-model/#jwt-encoding
 
 #### Defined in
 
-[types.ts:148](https://github.com/higayasuo/did-jwt-toolkit/blob/0e3be2d/src/types.ts#L148)
+[types.ts:148](https://github.com/higayasuo/did-jwt-toolkit/blob/546d701/src/types.ts#L148)
 
 ___
 
@@ -134,7 +134,7 @@ ___
 
 #### Defined in
 
-[types.ts:54](https://github.com/higayasuo/did-jwt-toolkit/blob/0e3be2d/src/types.ts#L54)
+[types.ts:54](https://github.com/higayasuo/did-jwt-toolkit/blob/546d701/src/types.ts#L54)
 
 ___
 
@@ -150,7 +150,7 @@ ___
 
 #### Defined in
 
-[types.ts:37](https://github.com/higayasuo/did-jwt-toolkit/blob/0e3be2d/src/types.ts#L37)
+[types.ts:37](https://github.com/higayasuo/did-jwt-toolkit/blob/546d701/src/types.ts#L37)
 
 ___
 
@@ -162,7 +162,7 @@ the issuer
 
 #### Defined in
 
-[types.ts:47](https://github.com/higayasuo/did-jwt-toolkit/blob/0e3be2d/src/types.ts#L47)
+[types.ts:47](https://github.com/higayasuo/did-jwt-toolkit/blob/546d701/src/types.ts#L47)
 
 ___
 
@@ -174,7 +174,7 @@ the JWT header
 
 #### Defined in
 
-[types.ts:42](https://github.com/higayasuo/did-jwt-toolkit/blob/0e3be2d/src/types.ts#L42)
+[types.ts:42](https://github.com/higayasuo/did-jwt-toolkit/blob/546d701/src/types.ts#L42)
 
 ___
 
@@ -186,7 +186,7 @@ the JWT payload
 
 #### Defined in
 
-[types.ts:142](https://github.com/higayasuo/did-jwt-toolkit/blob/0e3be2d/src/types.ts#L142)
+[types.ts:142](https://github.com/higayasuo/did-jwt-toolkit/blob/546d701/src/types.ts#L142)
 
 ___
 
@@ -205,7 +205,7 @@ key pair
 
 #### Defined in
 
-[types.ts:243](https://github.com/higayasuo/did-jwt-toolkit/blob/0e3be2d/src/types.ts#L243)
+[types.ts:243](https://github.com/higayasuo/did-jwt-toolkit/blob/546d701/src/types.ts#L243)
 
 ___
 
@@ -237,7 +237,7 @@ https://www.w3.org/TR/vc-data-model/#jwt-encoding
 
 #### Defined in
 
-[types.ts:165](https://github.com/higayasuo/did-jwt-toolkit/blob/0e3be2d/src/types.ts#L165)
+[types.ts:165](https://github.com/higayasuo/did-jwt-toolkit/blob/546d701/src/types.ts#L165)
 
 ___
 
@@ -247,7 +247,7 @@ ___
 
 #### Defined in
 
-[types.ts:56](https://github.com/higayasuo/did-jwt-toolkit/blob/0e3be2d/src/types.ts#L56)
+[types.ts:56](https://github.com/higayasuo/did-jwt-toolkit/blob/546d701/src/types.ts#L56)
 
 ___
 
@@ -266,7 +266,7 @@ Replaces the matching property types of T with the ones in U
 
 #### Defined in
 
-[types.ts:35](https://github.com/higayasuo/did-jwt-toolkit/blob/0e3be2d/src/types.ts#L35)
+[types.ts:35](https://github.com/higayasuo/did-jwt-toolkit/blob/546d701/src/types.ts#L35)
 
 ___
 
@@ -282,7 +282,7 @@ ___
 
 #### Defined in
 
-[types.ts:122](https://github.com/higayasuo/did-jwt-toolkit/blob/0e3be2d/src/types.ts#L122)
+[types.ts:122](https://github.com/higayasuo/did-jwt-toolkit/blob/546d701/src/types.ts#L122)
 
 ___
 
@@ -292,7 +292,7 @@ ___
 
 #### Defined in
 
-[types.ts:133](https://github.com/higayasuo/did-jwt-toolkit/blob/0e3be2d/src/types.ts#L133)
+[types.ts:133](https://github.com/higayasuo/did-jwt-toolkit/blob/546d701/src/types.ts#L133)
 
 ___
 
@@ -311,7 +311,7 @@ property that can be used to verify it.
 
 #### Defined in
 
-[types.ts:64](https://github.com/higayasuo/did-jwt-toolkit/blob/0e3be2d/src/types.ts#L64)
+[types.ts:64](https://github.com/higayasuo/did-jwt-toolkit/blob/546d701/src/types.ts#L64)
 
 ___
 
@@ -327,7 +327,7 @@ ___
 
 #### Defined in
 
-[types.ts:98](https://github.com/higayasuo/did-jwt-toolkit/blob/0e3be2d/src/types.ts#L98)
+[types.ts:98](https://github.com/higayasuo/did-jwt-toolkit/blob/546d701/src/types.ts#L98)
 
 ___
 
@@ -349,7 +349,7 @@ This is usually the result of a verification method and not meant to be created 
 
 #### Defined in
 
-[types.ts:225](https://github.com/higayasuo/did-jwt-toolkit/blob/0e3be2d/src/types.ts#L225)
+[types.ts:225](https://github.com/higayasuo/did-jwt-toolkit/blob/546d701/src/types.ts#L225)
 
 ___
 
@@ -367,7 +367,7 @@ Result object returned by verifyJWT
 
 #### Defined in
 
-[types.ts:213](https://github.com/higayasuo/did-jwt-toolkit/blob/0e3be2d/src/types.ts#L213)
+[types.ts:213](https://github.com/higayasuo/did-jwt-toolkit/blob/546d701/src/types.ts#L213)
 
 ___
 
@@ -383,7 +383,7 @@ This is usually the result of a verification method and not meant to be created 
 
 #### Defined in
 
-[types.ts:236](https://github.com/higayasuo/did-jwt-toolkit/blob/0e3be2d/src/types.ts#L236)
+[types.ts:236](https://github.com/higayasuo/did-jwt-toolkit/blob/546d701/src/types.ts#L236)
 
 ___
 
@@ -395,7 +395,7 @@ Represents the verification options that can be passed to the verifyCredentialJW
 
 #### Defined in
 
-[types.ts:203](https://github.com/higayasuo/did-jwt-toolkit/blob/0e3be2d/src/types.ts#L203)
+[types.ts:203](https://github.com/higayasuo/did-jwt-toolkit/blob/546d701/src/types.ts#L203)
 
 ___
 
@@ -407,7 +407,7 @@ Represents the verification options that can be passed to the verifyJWT method.
 
 #### Defined in
 
-[types.ts:198](https://github.com/higayasuo/did-jwt-toolkit/blob/0e3be2d/src/types.ts#L198)
+[types.ts:198](https://github.com/higayasuo/did-jwt-toolkit/blob/546d701/src/types.ts#L198)
 
 ___
 
@@ -419,7 +419,7 @@ Represents the verification options that can be passed to the verifyPresentation
 
 #### Defined in
 
-[types.ts:208](https://github.com/higayasuo/did-jwt-toolkit/blob/0e3be2d/src/types.ts#L208)
+[types.ts:208](https://github.com/higayasuo/did-jwt-toolkit/blob/546d701/src/types.ts#L208)
 
 ___
 
@@ -462,7 +462,7 @@ intact
 
 #### Defined in
 
-[types.ts:78](https://github.com/higayasuo/did-jwt-toolkit/blob/0e3be2d/src/types.ts#L78)
+[types.ts:78](https://github.com/higayasuo/did-jwt-toolkit/blob/546d701/src/types.ts#L78)
 
 ___
 
@@ -493,4 +493,4 @@ left intact.
 
 #### Defined in
 
-[types.ts:111](https://github.com/higayasuo/did-jwt-toolkit/blob/0e3be2d/src/types.ts#L111)
+[types.ts:111](https://github.com/higayasuo/did-jwt-toolkit/blob/546d701/src/types.ts#L111)

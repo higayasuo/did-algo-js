@@ -52,7 +52,7 @@ Represents the creation options that can be passed to [createCredentialJWT](modu
 
 #### Defined in
 
-[index.ts:75](https://github.com/higayasuo/did-jwt-toolkit/blob/0e3be2d/src/index.ts#L75)
+[index.ts:75](https://github.com/higayasuo/did-jwt-toolkit/blob/546d701/src/index.ts#L75)
 
 ___
 
@@ -64,7 +64,7 @@ the options for [createJWT](modules.md#createjwt)
 
 #### Defined in
 
-[index.ts:70](https://github.com/higayasuo/did-jwt-toolkit/blob/0e3be2d/src/index.ts#L70)
+[index.ts:70](https://github.com/higayasuo/did-jwt-toolkit/blob/546d701/src/index.ts#L70)
 
 ___
 
@@ -76,7 +76,7 @@ Represents the creation options that can be passed to [createPresentationJWT](mo
 
 #### Defined in
 
-[index.ts:80](https://github.com/higayasuo/did-jwt-toolkit/blob/0e3be2d/src/index.ts#L80)
+[index.ts:80](https://github.com/higayasuo/did-jwt-toolkit/blob/546d701/src/index.ts#L80)
 
 ___
 
@@ -98,7 +98,7 @@ https://www.w3.org/TR/vc-data-model/#jwt-encoding
 
 #### Defined in
 
-[index.ts:43](https://github.com/higayasuo/did-jwt-toolkit/blob/0e3be2d/src/index.ts#L43)
+[index.ts:43](https://github.com/higayasuo/did-jwt-toolkit/blob/546d701/src/index.ts#L43)
 
 ___
 
@@ -110,7 +110,7 @@ the issuer
 
 #### Defined in
 
-[index.ts:27](https://github.com/higayasuo/did-jwt-toolkit/blob/0e3be2d/src/index.ts#L27)
+[index.ts:27](https://github.com/higayasuo/did-jwt-toolkit/blob/546d701/src/index.ts#L27)
 
 ___
 
@@ -122,7 +122,7 @@ the JWT payload
 
 #### Defined in
 
-[index.ts:37](https://github.com/higayasuo/did-jwt-toolkit/blob/0e3be2d/src/index.ts#L37)
+[index.ts:37](https://github.com/higayasuo/did-jwt-toolkit/blob/546d701/src/index.ts#L37)
 
 ___
 
@@ -138,7 +138,7 @@ https://www.w3.org/TR/vc-data-model/#jwt-encoding
 
 #### Defined in
 
-[index.ts:50](https://github.com/higayasuo/did-jwt-toolkit/blob/0e3be2d/src/index.ts#L50)
+[index.ts:50](https://github.com/higayasuo/did-jwt-toolkit/blob/546d701/src/index.ts#L50)
 
 ___
 
@@ -156,7 +156,7 @@ Represents the result of a credential JWT verification
 
 #### Defined in
 
-[index.ts:60](https://github.com/higayasuo/did-jwt-toolkit/blob/0e3be2d/src/index.ts#L60)
+[index.ts:60](https://github.com/higayasuo/did-jwt-toolkit/blob/546d701/src/index.ts#L60)
 
 ___
 
@@ -174,7 +174,7 @@ Represents the result of a JWT verification
 
 #### Defined in
 
-[index.ts:55](https://github.com/higayasuo/did-jwt-toolkit/blob/0e3be2d/src/index.ts#L55)
+[index.ts:55](https://github.com/higayasuo/did-jwt-toolkit/blob/546d701/src/index.ts#L55)
 
 ___
 
@@ -186,7 +186,7 @@ Represents the result of a presentation JWT verification
 
 #### Defined in
 
-[index.ts:65](https://github.com/higayasuo/did-jwt-toolkit/blob/0e3be2d/src/index.ts#L65)
+[index.ts:65](https://github.com/higayasuo/did-jwt-toolkit/blob/546d701/src/index.ts#L65)
 
 ___
 
@@ -198,7 +198,7 @@ Represents the verification options that can be passed to [verifyCredentialJWT](
 
 #### Defined in
 
-[index.ts:90](https://github.com/higayasuo/did-jwt-toolkit/blob/0e3be2d/src/index.ts#L90)
+[index.ts:90](https://github.com/higayasuo/did-jwt-toolkit/blob/546d701/src/index.ts#L90)
 
 ___
 
@@ -210,7 +210,7 @@ Represents the verification options that can be passed to [verifyJWT](modules.md
 
 #### Defined in
 
-[index.ts:85](https://github.com/higayasuo/did-jwt-toolkit/blob/0e3be2d/src/index.ts#L85)
+[index.ts:85](https://github.com/higayasuo/did-jwt-toolkit/blob/546d701/src/index.ts#L85)
 
 ___
 
@@ -222,7 +222,7 @@ Represents the verification options that can be passed to [verifyPresentationJWT
 
 #### Defined in
 
-[index.ts:95](https://github.com/higayasuo/did-jwt-toolkit/blob/0e3be2d/src/index.ts#L95)
+[index.ts:95](https://github.com/higayasuo/did-jwt-toolkit/blob/546d701/src/index.ts#L95)
 
 ## Variables
 
@@ -234,7 +234,7 @@ https://www.w3.org/2018/credentials/v1
 
 #### Defined in
 
-[index.ts:12](https://github.com/higayasuo/did-jwt-toolkit/blob/0e3be2d/src/index.ts#L12)
+[index.ts:12](https://github.com/higayasuo/did-jwt-toolkit/blob/546d701/src/index.ts#L12)
 
 ___
 
@@ -246,7 +246,7 @@ VerifiableCredential
 
 #### Defined in
 
-[index.ts:17](https://github.com/higayasuo/did-jwt-toolkit/blob/0e3be2d/src/index.ts#L17)
+[index.ts:17](https://github.com/higayasuo/did-jwt-toolkit/blob/546d701/src/index.ts#L17)
 
 ___
 
@@ -258,7 +258,7 @@ VerifiablePresentation
 
 #### Defined in
 
-[index.ts:22](https://github.com/higayasuo/did-jwt-toolkit/blob/0e3be2d/src/index.ts#L22)
+[index.ts:22](https://github.com/higayasuo/did-jwt-toolkit/blob/546d701/src/index.ts#L22)
 
 ___
 
@@ -270,7 +270,7 @@ the resolver for DID
 
 #### Defined in
 
-[index.ts:32](https://github.com/higayasuo/did-jwt-toolkit/blob/0e3be2d/src/index.ts#L32)
+[index.ts:32](https://github.com/higayasuo/did-jwt-toolkit/blob/546d701/src/index.ts#L32)
 
 ## Functions
 
@@ -327,7 +327,7 @@ a signed credential JWT
 
 #### Defined in
 
-[index.ts:204](https://github.com/higayasuo/did-jwt-toolkit/blob/0e3be2d/src/index.ts#L204)
+[index.ts:204](https://github.com/higayasuo/did-jwt-toolkit/blob/546d701/src/index.ts#L204)
 
 ___
 
@@ -378,7 +378,7 @@ a signed JWT
 
 #### Defined in
 
-[index.ts:148](https://github.com/higayasuo/did-jwt-toolkit/blob/0e3be2d/src/index.ts#L148)
+[index.ts:148](https://github.com/higayasuo/did-jwt-toolkit/blob/546d701/src/index.ts#L148)
 
 ___
 
@@ -448,7 +448,7 @@ a signed presentation JWT
 
 #### Defined in
 
-[index.ts:263](https://github.com/higayasuo/did-jwt-toolkit/blob/0e3be2d/src/index.ts#L263)
+[index.ts:263](https://github.com/higayasuo/did-jwt-toolkit/blob/546d701/src/index.ts#L263)
 
 ___
 
@@ -480,7 +480,7 @@ the did:key driver
 
 #### Defined in
 
-[index.ts:110](https://github.com/higayasuo/did-jwt-toolkit/blob/0e3be2d/src/index.ts#L110)
+[index.ts:110](https://github.com/higayasuo/did-jwt-toolkit/blob/546d701/src/index.ts#L110)
 
 ___
 
@@ -510,7 +510,7 @@ a typed verifiable credential
 
 #### Defined in
 
-[index.ts:457](https://github.com/higayasuo/did-jwt-toolkit/blob/0e3be2d/src/index.ts#L457)
+[index.ts:457](https://github.com/higayasuo/did-jwt-toolkit/blob/546d701/src/index.ts#L457)
 
 ___
 
@@ -580,7 +580,7 @@ a promise of a verified credential JWT
 
 #### Defined in
 
-[index.ts:372](https://github.com/higayasuo/did-jwt-toolkit/blob/0e3be2d/src/index.ts#L372)
+[index.ts:372](https://github.com/higayasuo/did-jwt-toolkit/blob/546d701/src/index.ts#L372)
 
 ___
 
@@ -645,7 +645,7 @@ a promise of a verified JWT
 
 #### Defined in
 
-[index.ts:312](https://github.com/higayasuo/did-jwt-toolkit/blob/0e3be2d/src/index.ts#L312)
+[index.ts:312](https://github.com/higayasuo/did-jwt-toolkit/blob/546d701/src/index.ts#L312)
 
 ___
 
@@ -720,4 +720,4 @@ a promise of the verified presentation JWT
 
 #### Defined in
 
-[index.ts:439](https://github.com/higayasuo/did-jwt-toolkit/blob/0e3be2d/src/index.ts#L439)
+[index.ts:439](https://github.com/higayasuo/did-jwt-toolkit/blob/546d701/src/index.ts#L439)

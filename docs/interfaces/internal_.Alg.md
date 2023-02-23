@@ -38,7 +38,7 @@ a key pair
 
 #### Defined in
 
-[types.ts:267](https://github.com/higayasuo/did-jwt-toolkit/blob/0e3be2d/src/types.ts#L267)
+[types.ts:267](https://github.com/higayasuo/did-jwt-toolkit/blob/546d701/src/types.ts#L267)
 
 ___
 
@@ -66,7 +66,7 @@ an issuer
 
 #### Defined in
 
-[types.ts:307](https://github.com/higayasuo/did-jwt-toolkit/blob/0e3be2d/src/types.ts#L307)
+[types.ts:307](https://github.com/higayasuo/did-jwt-toolkit/blob/546d701/src/types.ts#L307)
 
 ___
 
@@ -94,7 +94,7 @@ a key pair
 
 #### Defined in
 
-[types.ts:275](https://github.com/higayasuo/did-jwt-toolkit/blob/0e3be2d/src/types.ts#L275)
+[types.ts:275](https://github.com/higayasuo/did-jwt-toolkit/blob/546d701/src/types.ts#L275)
 
 ___
 
@@ -122,7 +122,7 @@ a base58btc multibase
 
 #### Defined in
 
-[types.ts:283](https://github.com/higayasuo/did-jwt-toolkit/blob/0e3be2d/src/types.ts#L283)
+[types.ts:283](https://github.com/higayasuo/did-jwt-toolkit/blob/546d701/src/types.ts#L283)
 
 ___
 
@@ -150,7 +150,7 @@ a public key
 
 #### Defined in
 
-[types.ts:291](https://github.com/higayasuo/did-jwt-toolkit/blob/0e3be2d/src/types.ts#L291)
+[types.ts:291](https://github.com/higayasuo/did-jwt-toolkit/blob/546d701/src/types.ts#L291)
 
 ___
 
@@ -178,7 +178,7 @@ a publicKeyJwk object
 
 #### Defined in
 
-[types.ts:315](https://github.com/higayasuo/did-jwt-toolkit/blob/0e3be2d/src/types.ts#L315)
+[types.ts:315](https://github.com/higayasuo/did-jwt-toolkit/blob/546d701/src/types.ts#L315)
 
 ___
 
@@ -206,4 +206,4 @@ a signer
 
 #### Defined in
 
-[types.ts:299](https://github.com/higayasuo/did-jwt-toolkit/blob/0e3be2d/src/types.ts#L299)
+[types.ts:299](https://github.com/higayasuo/did-jwt-toolkit/blob/546d701/src/types.ts#L299)

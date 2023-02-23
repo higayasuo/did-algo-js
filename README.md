@@ -4,7 +4,7 @@ This toolkit simplifies development with did-jwt and did-jwt-vc.
 
 ## JSDocs
 
-[JSDocs](./jsdoc)
+[JSDocs](https://github.com/higayasuo/did-jwt-toolkit/blob/main/docs/modules.md)
 
 ## Installation
 
