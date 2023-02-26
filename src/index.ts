@@ -34,7 +34,7 @@ export const Resolver = didResolver.Resolver;
 /**
  * the JWT payload
  */
-export type JWTPayload = types.JWTPayload;
+export type JWTPayload<T = Record<string, any>> = types.JWTPayload<T>;
 
 /**
  * A JWT payload representation of a Credential

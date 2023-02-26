@@ -139,7 +139,8 @@ type VP = Extensible<{
 /**
  * the JWT payload
  */
-export type JWTPayload = Partial<didJwt.JWTPayload>;
+export type JWTPayload<T = Record<string, any>> = Partial<didJwt.JWTPayload> &
+  T;
 
 /**
  * A JWT payload representation of a Credential

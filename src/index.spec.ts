@@ -22,9 +22,9 @@ describe('did-jwt-toolkit', () => {
       name: string;
     };
 
-    const payload: didJwtKit.JWTPayload & MyPayload = {
+    const payload: didJwtKit.JWTPayload<MyPayload> = {
       aud: audienceDID,
-      name: 'My name',
+      name: 'aaa',
     };
 
     const jwt = await didJwtKit.createJWT(payload, issuer);
@@ -45,7 +45,7 @@ describe('did-jwt-toolkit', () => {
       name: string;
     };
 
-    const payload: didJwtKit.JWTPayload & MyPayload = {
+    const payload: didJwtKit.JWTPayload<MyPayload> = {
       aud: audienceDID,
       name: 'My name',
     };
