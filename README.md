@@ -73,7 +73,7 @@ type MyPayload = {
   name: string;
 };
 
-const payload: didJwtKit.JWTPayload & MyPayload = {
+const payload: didJwtKit.JWTPayload<MyPayload> = {
   aud: audienceDID,
   name: 'My name',
 };
@@ -99,11 +99,11 @@ const holderKeyPair = driver.generateKeyPair();
 const issuer = driver.issuerFromKeyPair(issuerKeyPair);
 const holderDID = driver.didFromPublicKey(holderKeyPair.publicKey);
 
-type MyPayload = {
+type MyCredential = {
   name: string;
 };
 
-const payload: didJwtKit.CredentialJWTPayload<MyPayload> = {
+const payload: didJwtKit.CredentialJWTPayload<MyCredential> = {
   sub: holderDID,
   vc: {
     '@context': [didJwtKit.DEFAULT_CONTEXT],
@@ -141,11 +141,11 @@ const issuer = driver.issuerFromKeyPair(issuerKeyPair);
 const holder = driver.issuerFromKeyPair(holderKeyPair);
 const verifierDID = driver.didFromPublicKey(verifierKeyPair.publicKey);
 
-type MyPayload = {
+type MyCredential = {
   name: string;
 };
 
-const vcPayload: didJwtKit.CredentialJWTPayload<MyPayload> = {
+const vcPayload: didJwtKit.CredentialJWTPayload<MyCredential> = {
   sub: holder.did,
   vc: {
     '@context': [didJwtKit.DEFAULT_CONTEXT],
@@ -204,7 +204,7 @@ type MyPayload = {
   name: string;
 };
 
-const payload: didJwtKit.JWTPayload & MyPayload = {
+const payload: didJwtKit.JWTPayload<MyPayload> = {
   aud: audienceDID,
   name: 'My name',
 };
@@ -299,11 +299,11 @@ const holderKeyPair = driver.generateKeyPair();
 const issuer = driver.issuerFromKeyPair(issuerKeyPair);
 const holderDID = driver.didFromPublicKey(holderKeyPair.publicKey);
 
-type MyPayload = {
+type MyCredential = {
   name: string;
 };
 
-const payload: didJwtKit.CredentialJWTPayload<MyPayload> = {
+const payload: didJwtKit.CredentialJWTPayload<MyCredential> = {
   sub: holderDID,
   vc: {
     '@context': [didJwtKit.DEFAULT_CONTEXT],
@@ -317,7 +317,7 @@ const payload: didJwtKit.CredentialJWTPayload<MyPayload> = {
 const vcJWT = await didJwtKit.createCredentialJWT(payload, issuer);
 const resolver = new didJwtKit.Resolver(driver.getResolverRegistry());
 
-const verifiedVC = await didJwtKit.verifyCredentialJWT<MyPayload>(
+const verifiedVC = await didJwtKit.verifyCredentialJWT<MyCredential>(
   vcJWT,
   resolver
 );
@@ -436,11 +436,11 @@ const issuer = driver.issuerFromKeyPair(issuerKeyPair);
 const holder = driver.issuerFromKeyPair(holderKeyPair);
 const verifierDID = driver.didFromPublicKey(verifierKeyPair.publicKey);
 
-type MyPayload = {
+type MyCredential = {
   name: string;
 };
 
-const vcPayload: didJwtKit.CredentialJWTPayload<MyPayload> = {
+const vcPayload: didJwtKit.CredentialJWTPayload<MyCredential> = {
   sub: holder.did,
   vc: {
     '@context': [didJwtKit.DEFAULT_CONTEXT],
@@ -470,7 +470,7 @@ const verifiedVP = await didJwtKit.verifyPresentationJWT(vpJWT, resolver, {
   audience: verifierDID,
 });
 
-const vc = didJwtKit.typedCredential<MyPayload>(
+const vc = didJwtKit.typedCredential<MyCredential>(
   verifiedVP.verifiablePresentation.verifiableCredential[0]
 );
 

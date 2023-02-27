@@ -132,7 +132,7 @@ export const getDIDKeyDriver = (
  *    name: string;
  *  };
  *
- *  const payload: didJwtKit.JWTPayload & MyPayload = {
+ *  const payload: didJwtKit.JWTPayload<MyPayload> = {
  *    aud: audienceDID,
  *    name: 'My name',
  *  };
@@ -287,7 +287,7 @@ export const createPresentationJWT = async (
  *    name: string;
  *  };
  *
- *  const payload: didJwtKit.JWTPayload & MyPayload = {
+ *  const payload: didJwtKit.JWTPayload<MyPayload> = {
  *    aud: audienceDID,
  *    name: 'My name',
  *  };
@@ -338,11 +338,11 @@ export const verifyJWT = async <T>(
  *  const issuer = driver.issuerFromKeyPair(issuerKeyPair);
  *  const holderDID = driver.didFromPublicKey(holderKeyPair.publicKey);
  *
- *  type MyPayload = {
+ *  type MyCredential = {
  *    name: string;
  *  };
  *
- *  const payload: didJwtKit.CredentialJWTPayload<MyPayload> = {
+ *  const payload: didJwtKit.CredentialJWTPayload<MyCredential> = {
  *    sub: holderDID,
  *    vc: {
  *      '@context': [didJwtKit.DEFAULT_CONTEXT],
@@ -357,7 +357,7 @@ export const verifyJWT = async <T>(
  *
  *  const resolver = new didJwtKit.Resolver(driver.getResolverRegistry());
  *
- *  const verifiedVC = await didJwtKit.verifyCredentialJWT<MyPayload>(vcJWT, resolver);
+ *  const verifiedVC = await didJwtKit.verifyCredentialJWT<MyCredential>(vcJWT, resolver);
  *
  *  // Type-safe access to the name property
  *  console.log(verifiedVC.verifiableCredential.credentialSubject.name);
@@ -396,11 +396,11 @@ export const verifyCredentialJWT = async <T>(
  *  const holder = driver.issuerFromKeyPair(holderKeyPair);
  *  const verifierDID = driver.didFromPublicKey(holderKeyPair.publicKey);
  *
- *  type MyPayload = {
+ *  type MyCredential = {
  *    name: string;
  *  };
  *
- *  const vcPayload: didJwtKit.CredentialJWTPayload<MyPayload> = {
+ *  const vcPayload: didJwtKit.CredentialJWTPayload<MyCredential> = {
  *    sub: holder.did,
  *    vc: {
  *      '@context': [didJwtKit.DEFAULT_CONTEXT],
@@ -411,7 +411,7 @@ export const verifyCredentialJWT = async <T>(
  *    },
  *  };
  *
- *  const vcJWT = didJwtKit.await createPresentationJWT(vpPayload, issuer);
+ *  const vcJWT = didJwtKit.await createCredentialJWT(vcPayload, issuer);
  *
  *  const vpPayload: didJwtKit.PresentationJWTPayload = {
  *    aud: verifierDID,

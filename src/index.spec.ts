@@ -4,6 +4,14 @@ import * as types from './types';
 
 import * as didJwtKit from '.';
 
+type MyCredential = {
+  name: string;
+};
+
+type Revocable = {
+  appIndex: number;
+};
+
 describe('did-jwt-toolkit', () => {
   it('getDIDKeyDriver should work', () => {
     expect(didJwtKit.getDIDKeyDriver('EdDSA')).toBeDefined();
@@ -41,11 +49,7 @@ describe('did-jwt-toolkit', () => {
     const issuer = driver.issuerFromKeyPair(issuerKeyPair);
     const audienceDID = driver.didFromPublicKey(audienceKeyPair.publicKey);
 
-    type MyPayload = {
-      name: string;
-    };
-
-    const payload: didJwtKit.JWTPayload<MyPayload> = {
+    const payload: didJwtKit.JWTPayload<MyCredential> = {
       aud: audienceDID,
       name: 'My name',
     };
@@ -54,7 +58,7 @@ describe('did-jwt-toolkit', () => {
 
     const resolver = new didJwtKit.Resolver(driver.getResolverRegistry());
 
-    const verifiedJWT = await didJwtKit.verifyJWT<MyPayload>(jwt, resolver, {
+    const verifiedJWT = await didJwtKit.verifyJWT<MyCredential>(jwt, resolver, {
       audience: audienceDID,
     });
 
@@ -71,11 +75,7 @@ describe('did-jwt-toolkit', () => {
     const issuer = driver.issuerFromKeyPair(issuerKeyPair);
     const holderDID = driver.didFromPublicKey(holderKeyPair.publicKey);
 
-    type MyPayload = {
-      name: string;
-    };
-
-    const payload: didJwtKit.CredentialJWTPayload<MyPayload> = {
+    const payload: didJwtKit.CredentialJWTPayload<MyCredential> = {
       sub: holderDID,
       vc: {
         '@context': [didJwtKit.DEFAULT_CONTEXT],
@@ -100,17 +100,14 @@ describe('did-jwt-toolkit', () => {
     const issuer = driver.issuerFromKeyPair(issuerKeyPair);
     const holderDID = driver.didFromPublicKey(holderKeyPair.publicKey);
 
-    type MyPayload = {
-      name: string;
-    };
-
-    const payload: didJwtKit.CredentialJWTPayload<MyPayload> = {
+    const payload: didJwtKit.CredentialJWTPayload<MyCredential & Revocable> = {
       sub: holderDID,
       vc: {
         '@context': [didJwtKit.DEFAULT_CONTEXT],
         type: [didJwtKit.DEFAULT_VC_TYPE],
         credentialSubject: {
           name: 'aaa',
+          appIndex: 1,
         },
       },
     };
@@ -118,10 +115,9 @@ describe('did-jwt-toolkit', () => {
     const vcJWT = await didJwtKit.createCredentialJWT(payload, issuer);
     const resolver = new didJwtKit.Resolver(driver.getResolverRegistry());
 
-    const verifiedVC = await didJwtKit.verifyCredentialJWT<MyPayload>(
-      vcJWT,
-      resolver
-    );
+    const verifiedVC = await didJwtKit.verifyCredentialJWT<
+      MyCredential & Revocable
+    >(vcJWT, resolver);
 
     console.log(JSON.stringify(verifiedVC, undefined, 2));
 
@@ -129,7 +125,11 @@ describe('did-jwt-toolkit', () => {
     expect(verifiedVC.verifiableCredential.credentialSubject.name).toEqual(
       'aaa'
     );
+    expect(verifiedVC.verifiableCredential.credentialSubject.appIndex).toEqual(
+      1
+    );
     expect(verifiedVC.payload.vc.credentialSubject.name).toEqual('aaa');
+    expect(verifiedVC.payload.vc.credentialSubject.appIndex).toEqual(1);
   });
 
   it('createPresentationJWT should work', async () => {
@@ -143,11 +143,7 @@ describe('did-jwt-toolkit', () => {
     const holder = driver.issuerFromKeyPair(holderKeyPair);
     const verifierDID = driver.didFromPublicKey(verifierKeyPair.publicKey);
 
-    type MyPayload = {
-      name: string;
-    };
-
-    const vcPayload: didJwtKit.CredentialJWTPayload<MyPayload> = {
+    const vcPayload: didJwtKit.CredentialJWTPayload<MyCredential> = {
       sub: holder.did,
       vc: {
         '@context': [didJwtKit.DEFAULT_CONTEXT],
@@ -185,20 +181,18 @@ describe('did-jwt-toolkit', () => {
     const holder = driver.issuerFromKeyPair(holderKeyPair);
     const verifierDID = driver.didFromPublicKey(verifierKeyPair.publicKey);
 
-    type MyPayload = {
-      name: string;
-    };
-
-    const vcPayload: didJwtKit.CredentialJWTPayload<MyPayload> = {
-      sub: holder.did,
-      vc: {
-        '@context': [didJwtKit.DEFAULT_CONTEXT],
-        type: [didJwtKit.DEFAULT_VC_TYPE],
-        credentialSubject: {
-          name: 'aaa',
+    const vcPayload: didJwtKit.CredentialJWTPayload<MyCredential & Revocable> =
+      {
+        sub: holder.did,
+        vc: {
+          '@context': [didJwtKit.DEFAULT_CONTEXT],
+          type: [didJwtKit.DEFAULT_VC_TYPE],
+          credentialSubject: {
+            name: 'aaa',
+            appIndex: 1,
+          },
         },
-      },
-    };
+      };
 
     const vcJWT = await didJwtKit.createCredentialJWT(vcPayload, issuer);
 
@@ -218,20 +212,23 @@ describe('did-jwt-toolkit', () => {
     const verifiedVP = await didJwtKit.verifyPresentationJWT(vpJWT, resolver, {
       audience: verifierDID,
     });
+    const typedVC = didJwtKit.typedCredential<MyCredential & Revocable>(
+      verifiedVP.verifiablePresentation.verifiableCredential[0]
+    );
+    console.log(typedVC);
 
     expect(verifiedVP).toBeDefined();
+    expect(typedVC.credentialSubject.name).toEqual('aaa');
+    expect(typedVC.credentialSubject.appIndex).toEqual(1);
   });
 
   it('typedCredential should work', async () => {
-    type MyPayload = {
-      name: string;
-    };
-
     const vc: types.VerifiableCredential = {
       '@context': [didJwtKit.DEFAULT_CONTEXT],
       type: [didJwtKit.DEFAULT_VC_TYPE],
       credentialSubject: {
         name: 'aaa',
+        appIndex: 1,
       },
       issuer: {
         id: 'did:key:abc',
@@ -242,8 +239,9 @@ describe('did-jwt-toolkit', () => {
       },
     };
 
-    const typedVC = didJwtKit.typedCredential<MyPayload>(vc);
+    const typedVC = didJwtKit.typedCredential<MyCredential & Revocable>(vc);
 
     expect(typedVC.credentialSubject.name).toEqual('aaa');
+    expect(typedVC.credentialSubject.appIndex).toEqual(1);
   });
 });

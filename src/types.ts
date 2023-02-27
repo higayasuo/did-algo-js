@@ -223,7 +223,9 @@ export type VerifiedJWT<T = Record<string, any>> = Replace<
  *
  * This is usually the result of a verification method and not meant to be created by generic code.
  */
-export type VerifiedCredentialJWT<T> = VerifiedJWT<{ vc: VC<T> }> & {
+export type VerifiedCredentialJWT<T> = VerifiedJWT<{
+  vc: VC<T>;
+}> & {
   verifiableCredential: Verifiable<W3CCredential<T>>;
 };
 
