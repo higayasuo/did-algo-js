@@ -139,8 +139,18 @@ type VP = Extensible<{
 /**
  * the JWT payload
  */
-export type JWTPayload<T = Record<string, any>> = Partial<didJwt.JWTPayload> &
-  T;
+export type JWTPayload<T = Record<string, any>> = {
+  iss?: string;
+  sub?: string;
+  aud?: string | string[];
+  iat?: number;
+  nbf?: number;
+  exp?: number;
+  rexp?: number;
+
+  // eslint-disable-next-line @typescript-eslint/no-explicit-any
+  [x: string]: any;
+} & T;
 
 /**
  * A JWT payload representation of a Credential
@@ -150,6 +160,7 @@ export type CredentialJWTPayload<T> = {
   iss?: string;
   sub: string;
   vc: VC<T>;
+  iat?: number;
   nbf?: number;
   aud?: string | string[];
   exp?: number;
@@ -167,6 +178,7 @@ export type PresentationJWTPayload = {
   aud: string | string[];
   vp: VP;
   iss?: string;
+  iat?: number;
   nbf?: number;
   exp?: number;
   jti?: string;

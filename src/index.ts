@@ -156,6 +156,7 @@ export const createJWT = async (
     expiresIn: options.expiresIn,
     canonicalize: options.canonicalize,
   };
+
   const jwtHeader: types.JWTHeader = options.header || {};
 
   jwtHeader.alg = issuer.alg;
