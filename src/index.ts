@@ -94,6 +94,8 @@ export type VerifyCredentialJWTOptions = types.VerifyCredentialJWTOptions;
  */
 export type VerifyPresentationJWTOptions = types.VerifyPresentationJWTOptions;
 
+export type VerifiableCredential<T = unknown> = types.VerifiableCredential<T>;
+
 /**
  * Returns the did:key driver
  *
@@ -456,5 +458,5 @@ export const verifyPresentationJWT = async (
  * @returns a typed verifiable credential
  */
 export const typedCredential = <T>(
-  credential: types.VerifiableCredential
-): types.VerifiableCredential<T> => credential as types.VerifiableCredential<T>;
+  credential: VerifiableCredential
+): VerifiableCredential<T> => credential as VerifiableCredential<T>;
