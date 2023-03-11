@@ -100,4 +100,12 @@ export const secp256k1Alg: types.Alg = {
       y,
     };
   },
+
+  /**
+   * Handles key agreement section
+   *
+   * @param didDocument - the DID document
+   * @returns
+   */
+  handleKeyAgreement: (didDocument: didResolver.DIDDocument): void => {},
 };

@@ -8,6 +8,9 @@ import * as types from '../types';
 import * as didKeyDriver from '../didkey/didKeyDriver';
 import * as multibaseUtils from '../utils/multibaseUtils';
 
+export const X25519_2019_CONTEXT =
+  'https://w3id.org/security/suites/x25519-2019/v1';
+
 export const ed25519Alg: types.Alg = {
   /**
    * Generates a key pair
@@ -97,5 +100,45 @@ export const ed25519Alg: types.Alg = {
       crv: 'Ed25519',
       x,
     };
+  },
+
+  /**
+   * Handles key agreement section
+   *
+   * @param didDocument - the DID document
+   * @returns
+   */
+  handleKeyAgreement: (didDocument: didResolver.DIDDocument): void => {
+    if (Array.isArray(didDocument['@context'])) {
+      didDocument['@context'].push(X25519_2019_CONTEXT);
+    } else {
+      throw new Error(`@context must be string array`);
+    }
+
+    if (
+      !didDocument.verificationMethod ||
+      !didDocument.verificationMethod[0].publicKeyJwk?.x
+    ) {
+      throw new Error(`public key must be defined`);
+    }
+
+    const publicKey = u8a.fromString(
+      didDocument.verificationMethod[0].publicKeyJwk?.x,
+      'base64url'
+    );
+    const x25519PublicKey = ed25519.convertPublicKeyToX25519(publicKey);
+    const x25519PublicKeyMultibase = multibaseUtils.multibaseFromPublicKey(
+      multibaseUtils.MULTICODEC_X25519_PUB_HEADER,
+      x25519PublicKey
+    );
+
+    didDocument.keyAgreement = [
+      {
+        id: `${didDocument.id}#${x25519PublicKeyMultibase}`,
+        type: 'X25519KeyAgreementKey2019',
+        controller: didDocument.id,
+        publicKeyBase58: u8a.toString(x25519PublicKey, 'base58btc'),
+      },
+    ];
   },
 };

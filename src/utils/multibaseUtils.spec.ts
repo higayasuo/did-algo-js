@@ -13,6 +13,7 @@ const p256 = new elliptic.ec('p256');
 describe('multibaseUtils', () => {
   it('multibaseFromPublicKey should work', () => {
     const ed25519PublicKey = ed25519.generateKeyPair().publicKey;
+    const x25519PublicKey = ed25519.convertPublicKeyToX25519(ed25519PublicKey);
     const secp256k1PublicKey = Uint8Array.from(
       secp256k1.genKeyPair().getPublic().encodeCompressed()
     );
@@ -27,7 +28,15 @@ describe('multibaseUtils', () => {
           ed25519PublicKey
         )
         .startsWith(multibaseUtils.MULTIBASE_BASE58BTC_ED25519_PREFIX)
-    ).to.be.true;
+    ).toBeTruthy();
+    expect(
+      multibaseUtils
+        .multibaseFromPublicKey(
+          multibaseUtils.MULTICODEC_X25519_PUB_HEADER,
+          x25519PublicKey
+        )
+        .startsWith(multibaseUtils.MULTIBASE_BASE58BTC_X25519_PREFIX)
+    ).toBeTruthy();
     expect(
       multibaseUtils
         .multibaseFromPublicKey(
@@ -35,7 +44,7 @@ describe('multibaseUtils', () => {
           secp256k1PublicKey
         )
         .startsWith(multibaseUtils.MULTIBASE_BASE58BTC_SECP256K1_PREFIX)
-    ).to.be.true;
+    ).toBeTruthy();
     expect(
       multibaseUtils
         .multibaseFromPublicKey(
@@ -43,11 +52,12 @@ describe('multibaseUtils', () => {
           p256PublicKey
         )
         .startsWith(multibaseUtils.MULTIBASE_BASE58BTC_P256_PREFIX)
-    ).to.be.true;
+    ).toBeTruthy();
   });
 
   it('publicKeyFromMultibase should work', () => {
     const ed25519PublicKey = ed25519.generateKeyPair().publicKey;
+    const x25519PublicKey = ed25519.convertPublicKeyToX25519(ed25519PublicKey);
     const secp256k1PublicKey = Uint8Array.from(
       secp256k1.genKeyPair().getPublic().encodeCompressed()
     );
@@ -58,6 +68,10 @@ describe('multibaseUtils', () => {
     const ed25519Multibase = multibaseUtils.multibaseFromPublicKey(
       multibaseUtils.MULTICODEC_ED25519_PUB_HEADER,
       ed25519PublicKey
+    );
+    const x25519Multibase = multibaseUtils.multibaseFromPublicKey(
+      multibaseUtils.MULTICODEC_X25519_PUB_HEADER,
+      x25519PublicKey
     );
     const secp256k1Multibase = multibaseUtils.multibaseFromPublicKey(
       multibaseUtils.MULTICODEC_SECP256K1_PUB_HEADER,
@@ -73,31 +87,35 @@ describe('multibaseUtils', () => {
         multibaseUtils.MULTICODEC_ED25519_PUB_HEADER,
         ed25519Multibase
       )
-    ).to.eql(ed25519PublicKey);
+    ).toEqual(ed25519PublicKey);
+    expect(
+      multibaseUtils.publicKeyFromMultibase(
+        multibaseUtils.MULTICODEC_X25519_PUB_HEADER,
+        x25519Multibase
+      )
+    ).toEqual(x25519PublicKey);
     expect(
       multibaseUtils.publicKeyFromMultibase(
         multibaseUtils.MULTICODEC_SECP256K1_PUB_HEADER,
         secp256k1Multibase
       )
-    ).to.eql(secp256k1PublicKey);
+    ).toEqual(secp256k1PublicKey);
     expect(
       multibaseUtils.publicKeyFromMultibase(
         multibaseUtils.MULTICODEC_P256_PUB_HEADER,
         p256Multibase
       )
-    ).to.eql(p256PublicKey);
+    ).toEqual(p256PublicKey);
 
     expect(() =>
       multibaseUtils.publicKeyFromMultibase(Uint8Array.from([]), 'a')
-    ).to.throw(
-      'invalidMultibaseHeader: The multibase must start with z, but a'
-    );
+    ).toThrow('invalidMultibaseHeader: The multibase must start with z, but a');
     expect(() =>
       multibaseUtils.publicKeyFromMultibase(
         multibaseUtils.MULTICODEC_ED25519_PUB_HEADER,
         p256Multibase
       )
-    ).to.throw('The multicodec must start with [237,1], but [128,36]');
+    ).toThrow('The multicodec must start with [237,1], but [128,36]');
   });
 
   it('algFromMultibase should work', () => {

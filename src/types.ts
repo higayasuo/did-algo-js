@@ -328,4 +328,12 @@ export interface Alg {
    * @returns a publicKeyJwk object
    */
   publicKeyJwkFromPublicKey: (publicKey: Uint8Array) => didResolver.JsonWebKey;
+
+  /**
+   * Handles key agreement section
+   *
+   * @param didDocument - the DID document
+   * @returns
+   */
+  handleKeyAgreement: (didDocument: didResolver.DIDDocument) => void;
 }

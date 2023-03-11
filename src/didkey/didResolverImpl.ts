@@ -52,6 +52,8 @@ export const resolver: didResolver.DIDResolver = async (
       capabilityInvocation: [verificationMethodId],
     };
 
+    alg.handleKeyAgreement(didDocument);
+
     return {
       didResolutionMetadata: {
         contentType: 'application/did+ld+json',
